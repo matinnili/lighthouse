@@ -22,7 +22,6 @@ describe('DetailsRenderer', () => {
     const {document} = new jsdom.JSDOM(reportAssets.REPORT_TEMPLATES).window;
     const dom = new DOM(document);
     renderer = new DetailsRenderer(dom, options);
-    renderer.setTemplateContext(dom.document());
   }
 
   beforeAll(() => {

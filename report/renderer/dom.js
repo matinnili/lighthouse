@@ -47,7 +47,9 @@ export class DOM {
   createElement(name, className, attrs = {}) {
     const element = this._document.createElement(name);
     if (className) {
-      element.className = className;
+      for (const token of className.split(/\s+/)) {
+        if (token) element.classList.add(token);
+      }
     }
     Object.keys(attrs).forEach(key => {
       const value = attrs[key];
@@ -70,7 +72,9 @@ export class DOM {
   createElementNS(namespaceURI, name, className, attrs = {}) {
     const element = this._document.createElementNS(namespaceURI, name);
     if (className) {
-      for (const token of className.split(' ')) element.classList.add(token);
+      for (const token of className.split(/\s+/)) {
+        if (token) element.classList.add(token);
+      }
     }
     Object.keys(attrs).forEach(key => {
       const value = attrs[key];
@@ -105,7 +109,7 @@ export class DOM {
   }
 
   /**
-   * @param {Parameters<typeof createComponent>[1]} componentName
+   * @param {import('./components.js').ComponentName} componentName
    * @return {!DocumentFragment} A clone of the cached component.
    */
   createComponent(componentName) {

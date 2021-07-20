@@ -39,37 +39,36 @@ describe('DOM', () => {
 
     it('creates an element from parameters', () => {
       const el = dom.createElement(
-          'div', 'class1 class2', {title: 'title attr', tabindex: 0});
+          'div', ' class1  class2\n', {title: 'title attr', tabindex: 0});
       assert.equal(el.localName, 'div');
       assert.equal(el.className, 'class1 class2');
       assert.equal(el.getAttribute('title'), 'title attr');
       assert.equal(el.getAttribute('tabindex'), '0');
     });
+
+    it('creates an svg element from parameters', () => {
+      const el = dom.createElementNS('http://www.w3.org/2000/svg',
+        'svg', ' class1  class2\n', {title: 'title attr', tabindex: 0});
+      assert.equal(el.localName, 'svg');
+      assert.equal(el.className.baseVal, 'class1 class2');
+      assert.equal(el.getAttribute('title'), 'title attr');
+      assert.equal(el.getAttribute('tabindex'), '0');
+    });
   });
 
-  describe('cloneTemplate', () => {
-    it('should clone a template', () => {
-      const clone = dom.cloneTemplate('#tmpl-lh-audit', dom.document());
-      assert.ok(clone.querySelector('.lh-audit'));
+  describe('createComponent', () => {
+    it('should create a component', () => {
+      const component = dom.createComponent('audit');
+      assert.ok(component.querySelector('.lh-audit'));
     });
 
-    it('should clone a template from a context scope', () => {
-      const heading = dom.cloneTemplate('#tmpl-lh-footer', dom.document());
-      const items = dom.cloneTemplate('#tmpl-lh-env__item', heading);
-      assert.ok(items.querySelector('.lh-env__item'));
-    });
-
-    it('fails when template cannot be found', () => {
-      assert.throws(() => dom.cloneTemplate('#unknown-selector', dom.document()));
-    });
-
-    it('fails when a template context isn\'t provided', () => {
-      assert.throws(() => dom.cloneTemplate('#tmpl-lh-audit'));
+    it('fails when component cannot be found', () => {
+      assert.throws(() => dom.createComponent('unknown-component'));
     });
 
     it('does not inject duplicate styles', () => {
-      const clone = dom.cloneTemplate('#tmpl-lh-snippet', dom.document());
-      const clone2 = dom.cloneTemplate('#tmpl-lh-snippet', dom.document());
+      const clone = dom.createComponent('snippet');
+      const clone2 = dom.createComponent('snippet');
       assert.ok(clone.querySelector('style'));
       assert.ok(!clone2.querySelector('style'));
     });

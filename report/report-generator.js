@@ -38,7 +38,7 @@ class ReportGenerator {
       .replace(/\u2028/g, '\\u2028') // replaces line separators ()
       .replace(/\u2029/g, '\\u2029'); // replaces paragraph separators
     // terser does its own sanitization, but keep this basic replace for when
-    // we want to debug locally without minification.
+    // we want to generate a report without minification.
     const sanitizedJavascript = htmlReportAssets.REPORT_JAVASCRIPT.replace(/<\//g, '\\u003c/');
 
     return ReportGenerator.replaceStrings(htmlReportAssets.REPORT_TEMPLATE, [

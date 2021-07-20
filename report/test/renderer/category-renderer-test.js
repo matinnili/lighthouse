@@ -472,13 +472,4 @@ describe('CategoryRenderer', () => {
       assert.ok(shouldBeWarning[0].textContent.includes(passingWarning));
     });
   });
-
-  it('can set a custom templateContext', () => {
-    assert.equal(renderer.templateContext, renderer.dom.document());
-
-    const dom = new jsdom.JSDOM(reportAssets.REPORT_TEMPLATES);
-    const otherDocument = dom.window.document;
-    renderer.setTemplateContext(otherDocument);
-    assert.equal(renderer.templateContext, otherDocument);
-  });
 });

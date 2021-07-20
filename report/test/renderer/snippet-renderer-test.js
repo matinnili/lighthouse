@@ -68,7 +68,7 @@ describe('DetailsRenderer', () => {
   });
 
   function renderSnippet(details) {
-    const el = SnippetRenderer.render(dom, dom.document(), details, {});
+    const el = SnippetRenderer.render(dom, details, {});
 
     return {
       el,
