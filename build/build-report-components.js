@@ -81,62 +81,36 @@ function compileTemplate(tmpEl) {
       }
     }
 
-    // const hasMultipleTextNodesWithContent = [...el.childNodes]
-    //   .map(n => n.nodeType === window.Node.TEXT_NODE &&
-    //             n.textContent && n.textContent.trim().length > 0).length > 1;
-    // const hasMultipleTextNodesWithContent = el.children.length > 2;
-    // for (const childEl of el.childNodes) {
-    //   const n = childEl;
-    //   // console.log(n.nodeType === window.Node.TEXT_NODE &&
-    //   //   n.textContent && n.textContent.trim());
-    //   if (n.nodeType === window.Node.TEXT_NODE && n.textContent && n.textContent.trim()) {
-    //     // console.log('s:', n.textContent);
-    //   }
-    // }
-    // console.log(el.children.length, hasMultipleTextNodesWithContent);
-
-    // Whitespace at the beginning and at the end can be removed.
-    let lower = 0;
-    let upper = el.childNodes.length;
-    if (el.childNodes.length > 0) {
-      const node = el.childNodes[0];
-      if (node.nodeType === window.Node.TEXT_NODE && node.textContent && !node.textContent.trim()) {
-        lower += 1;
-      }
-    }
-    if (el.childNodes.length > 1) {
-      const node = el.childNodes[el.childNodes.length - 1];
-      if (node.nodeType === window.Node.TEXT_NODE && node.textContent && !node.textContent.trim()) {
-        upper -= 1;
-      }
-    }
-
-    // TODO: the above assumes the first or last nodes wouldn't be a comment ... below is more generic. use?
-    // for (const node of el.childNodes) {
-    //   if (node.nodeType === window.Node.TEXT_NODE && node.textContent && !node.textContent.trim()) {
-    //     lower += 1;
-    //   } else {
-    //     break;
-    //   }
-    // }
-    // for (const node of [...el.childNodes].reverse()) {
-    //   if (node.nodeType === window.Node.TEXT_NODE && node.textContent && !node.textContent.trim()) {
-    //     upper -= 1;
-    //   } else {
-    //     break;
-    //   }
-    // }
-
-    for (const childNode of [...el.childNodes].slice(lower, upper)) {
+    for (const childNode of el.childNodes) {
       if (childNode.nodeType === window.Node.COMMENT_NODE) continue;
 
       if (childNode.nodeType === window.Node.TEXT_NODE) {
         if (!childNode.parentElement) continue;
         if (!childNode.textContent) continue;
 
+        // Most all-whitespace nodes can be ignored
+        // (example: the first and last nodes are typically text nodes of newlines and spaces),
+        // but not all can. Sometimes spaces are important for content (ex: lh-generated).
+        // As an heurstic, check if a text node has two sibling element nodes and that at least
+        // one is a span. This results in correct content with minimal false positives (which just means
+        // a few extra text node creations).
+        const previousSiblingElement = childNode.previousSibling &&
+          childNode.previousSibling.nodeType === window.Node.ELEMENT_NODE ?
+          /** @type {HTMLElement} */ (childNode.previousSibling) :
+          null;
+        const nextSiblingElement = childNode.nextSibling &&
+          childNode.nextSibling.nodeType === window.Node.ELEMENT_NODE ?
+          /** @type {HTMLElement} */ (childNode.nextSibling) :
+          null;
+        const allowJustWhitespace = previousSiblingElement && nextSiblingElement &&
+          (previousSiblingElement.tagName === 'SPAN' || nextSiblingElement.tagName === 'SPAN');
+        if (!allowJustWhitespace && !childNode.textContent.trim()) {
+          continue;
+        }
+
         let textContent = childNode.textContent;
         // Consecutive whitespace is redundant, unless in certain elements.
-        if (!['pre', 'style'].includes(childNode.parentElement.tagName)) {
+        if (!['PRE', 'STYLE'].includes(childNode.parentElement.tagName)) {
           textContent = textContent.replace(/\s+/g, ' ');
         }
         // Escaped string value for JS.
