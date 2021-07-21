@@ -64,8 +64,10 @@ async function assertDOMTreeMatches(tmplEl) {
 
   expect(generatedFragment.childNodes.length).toEqual(originalFragment.childNodes.length);
   for (let i = 0; i < generatedFragment.childNodes.length; i++) {
-    expect(generatedFragment.childNodes[0].innerHTML)
-      .toEqual(originalFragment.childNodes[0].innerHTML);
+    if (tmplEl.id === 'footer') console.log(generatedFragment.childNodes[i].innerHTML);
+    if (tmplEl.id === 'footer') console.log(originalFragment.childNodes[i].innerHTML);
+    expect(generatedFragment.childNodes[i].innerHTML)
+      .toEqual(originalFragment.childNodes[i].innerHTML);
   }
 
   // TODO: also assert something else to catch how SVG elements serialize the same, even if they dont get built correctly (with createAttributeNS, etc)

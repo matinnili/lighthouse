@@ -81,22 +81,75 @@ function compileTemplate(tmpEl) {
       }
     }
 
-    for (const childEl of el.childNodes) {
-      if (childEl.nodeType === window.Node.COMMENT_NODE) continue;
+    // const hasMultipleTextNodesWithContent = [...el.childNodes]
+    //   .map(n => n.nodeType === window.Node.TEXT_NODE &&
+    //             n.textContent && n.textContent.trim().length > 0).length > 1;
+    // const hasMultipleTextNodesWithContent = el.children.length > 2;
+    // for (const childEl of el.childNodes) {
+    //   const n = childEl;
+    //   // console.log(n.nodeType === window.Node.TEXT_NODE &&
+    //   //   n.textContent && n.textContent.trim());
+    //   if (n.nodeType === window.Node.TEXT_NODE && n.textContent && n.textContent.trim()) {
+    //     // console.log('s:', n.textContent);
+    //   }
+    // }
+    // console.log(el.children.length, hasMultipleTextNodesWithContent);
 
-      if (childEl.nodeType === window.Node.TEXT_NODE) {
-        if (childEl.parentElement && childEl.textContent && childEl.textContent.trim()) {
-          const varName = makeOrGetVarName(childEl.parentElement);
-          const textContent = JSON.stringify(childEl.textContent);
-          lines.push(`${varName}.append(dom.document().createTextNode(${textContent}));`);
+    // Whitespace at the beginning and at the end can be removed.
+    let lower = 0;
+    let upper = el.childNodes.length;
+    if (el.childNodes.length > 0) {
+      const node = el.childNodes[0];
+      if (node.nodeType === window.Node.TEXT_NODE && node.textContent && !node.textContent.trim()) {
+        lower += 1;
+      }
+    }
+    if (el.childNodes.length > 1) {
+      const node = el.childNodes[el.childNodes.length - 1];
+      if (node.nodeType === window.Node.TEXT_NODE && node.textContent && !node.textContent.trim()) {
+        upper -= 1;
+      }
+    }
+
+    // TODO: the above assumes the first or last nodes wouldn't be a comment ... below is more generic. use?
+    // for (const node of el.childNodes) {
+    //   if (node.nodeType === window.Node.TEXT_NODE && node.textContent && !node.textContent.trim()) {
+    //     lower += 1;
+    //   } else {
+    //     break;
+    //   }
+    // }
+    // for (const node of [...el.childNodes].reverse()) {
+    //   if (node.nodeType === window.Node.TEXT_NODE && node.textContent && !node.textContent.trim()) {
+    //     upper -= 1;
+    //   } else {
+    //     break;
+    //   }
+    // }
+
+    for (const childNode of [...el.childNodes].slice(lower, upper)) {
+      if (childNode.nodeType === window.Node.COMMENT_NODE) continue;
+
+      if (childNode.nodeType === window.Node.TEXT_NODE) {
+        if (!childNode.parentElement) continue;
+        if (!childNode.textContent) continue;
+
+        let textContent = childNode.textContent;
+        // Consecutive whitespace is redundant, unless in certain elements.
+        if (!['pre', 'style'].includes(childNode.parentElement.tagName)) {
+          textContent = textContent.replace(/\s+/g, ' ');
         }
+        // Escaped string value for JS.
+        textContent = JSON.stringify(textContent);
 
+        const varName = makeOrGetVarName(childNode.parentElement);
+        lines.push(`${varName}.append(dom.document().createTextNode(${textContent}));`);
         continue;
       }
 
       // @ts-expect-error: it's an Element.
-      process(childEl);
-      const childVarName = elemToVarNames.get(childEl);
+      process(childNode);
+      const childVarName = elemToVarNames.get(childNode);
       if (childVarName) lines.push(`${varName}.append(${childVarName});`);
     }
   }
