@@ -17,6 +17,7 @@ import {I18n} from '../../renderer/i18n.js';
 /* eslint-env jest */
 
 describe('DOM', () => {
+  /** @type {DOM} */
   let dom;
   let window;
 
