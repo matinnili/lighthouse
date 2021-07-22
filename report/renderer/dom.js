@@ -39,24 +39,15 @@ export class DOM {
    * @template {string} T
    * @param {T} name
    * @param {string=} className
-   * @param {Object<string, (string|undefined)>=} attrs Attribute key/val pairs.
-   *     Note: if an attribute key has an undefined value, this method does not
-   *     set the attribute on the node.
    * @return {HTMLElementByTagName[T]}
    */
-  createElement(name, className, attrs = {}) {
+  createElement(name, className) {
     const element = this._document.createElement(name);
     if (className) {
       for (const token of className.split(/\s+/)) {
         if (token) element.classList.add(token);
       }
     }
-    Object.keys(attrs).forEach(key => {
-      const value = attrs[key];
-      if (typeof value !== 'undefined') {
-        element.setAttribute(key, value);
-      }
-    });
     return element;
   }
 
@@ -64,24 +55,15 @@ export class DOM {
    * @param {string} namespaceURI
    * @param {string} name
    * @param {string=} className
-   * @param {Object<string, (string|undefined)>=} attrs Attribute key/val pairs.
-   *     Note: if an attribute key has an undefined value, this method does not
-   *     set the attribute on the node.
    * @return {Element}
    */
-  createElementNS(namespaceURI, name, className, attrs = {}) {
+  createElementNS(namespaceURI, name, className) {
     const element = this._document.createElementNS(namespaceURI, name);
     if (className) {
       for (const token of className.split(/\s+/)) {
         if (token) element.classList.add(token);
       }
     }
-    Object.keys(attrs).forEach(key => {
-      const value = attrs[key];
-      if (typeof value !== 'undefined') {
-        element.setAttribute(key, value);
-      }
-    });
     return element;
   }
 
@@ -97,13 +79,10 @@ export class DOM {
    * @param {Element} parentElem
    * @param {T} elementName
    * @param {string=} className
-   * @param {Object<string, (string|undefined)>=} attrs Attribute key/val pairs.
-   *     Note: if an attribute key has an undefined value, this method does not
-   *     set the attribute on the node.
    * @return {HTMLElementByTagName[T]}
    */
-  createChildOf(parentElem, elementName, className, attrs) {
-    const element = this.createElement(elementName, className, attrs);
+  createChildOf(parentElem, elementName, className) {
+    const element = this.createElement(elementName, className);
     parentElem.appendChild(element);
     return element;
   }
@@ -155,11 +134,48 @@ export class DOM {
       a.rel = 'noopener';
       a.target = '_blank';
       a.textContent = segment.text;
-      a.href = url.href;
+      this.safelySetHref(a, url.href);
       element.appendChild(a);
     }
 
     return element;
+  }
+
+  /**
+   * Set link href, but safely, preventing `javascript:` protocol, etc.
+   * @see https://github.com/google/safevalues/
+   * @param {HTMLAnchorElement} elem
+   * @param {string} url
+   */
+  safelySetHref(elem, url) {
+    // In-page anchor links are safe.
+    if (url.startsWith('#')) {
+      elem.href = url;
+      return;
+    }
+
+    const allowedProtocols = ['https:', 'http:'];
+    let parsed;
+    try {
+      parsed = new URL(url);
+    } catch (_) {}
+
+    if (parsed && allowedProtocols.includes(parsed.protocol)) {
+      elem.href = parsed.href;
+    }
+  }
+
+  /**
+   * Only create blob URLs for JSON & HTML
+   * @param {HTMLAnchorElement} elem
+   * @param {Blob} blob
+   */
+  safelySetBlobHref(elem, blob) {
+    if (blob.type !== 'text/html' && blob.type !== 'application/json') {
+      throw new Error('Unsupported blob type');
+    }
+    const href = URL.createObjectURL(blob);
+    elem.href = href;
   }
 
   /**
