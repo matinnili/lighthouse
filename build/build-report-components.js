@@ -81,6 +81,8 @@ function compileTemplate(tmpEl) {
       }
     }
 
+    /** @type {string[]} */
+    const childNodesToAppend = [];
     for (const childNode of el.childNodes) {
       if (childNode.nodeType === window.Node.COMMENT_NODE) continue;
 
@@ -116,15 +118,19 @@ function compileTemplate(tmpEl) {
         // Escaped string value for JS.
         textContent = JSON.stringify(textContent);
 
-        const varName = makeOrGetVarName(childNode.parentElement);
-        lines.push(`${varName}.append(dom.document().createTextNode(${textContent}));`);
+        childNodesToAppend.push(textContent);
         continue;
       }
 
       // @ts-expect-error: it's an Element.
       process(childNode);
+
       const childVarName = elemToVarNames.get(childNode);
-      if (childVarName) lines.push(`${varName}.append(${childVarName});`);
+      if (childVarName) childNodesToAppend.push(childVarName);
+    }
+
+    if (childNodesToAppend.length) {
+      lines.push(`${varName}.append(${childNodesToAppend.join(',')});`);
     }
   }
 
