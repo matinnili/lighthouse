@@ -35,6 +35,47 @@ function createFunctionCode(functionName, bodyLines, parameterNames = []) {
 }
 
 /**
+ * @param {ChildNode} childNode
+ * @return {string|undefined}
+ */
+function getTextNodePossiblySignificantText(childNode) {
+  // Just for typescript.
+  if (!childNode.parentElement) return;
+  // Just for typescript. If a text node has no text, it's trivially not significant.
+  if (!childNode.textContent) return;
+
+  // Most all-whitespace nodes can be ignored
+  // (example: the first and last nodes are typically text nodes of newlines and spaces),
+  // but not all can. Sometimes spaces are important for content (ex: lh-generated).
+  // As an heurstic, check if a text node has two sibling element nodes and that at least
+  // one is a span. This results in correct content with minimal false positives (which just means
+  // a few extra text node creations).
+  if (!childNode.textContent.trim()) {
+    const previousSiblingElement = childNode.previousSibling &&
+      childNode.previousSibling.nodeType === window.Node.ELEMENT_NODE ?
+      /** @type {HTMLElement} */ (childNode.previousSibling) :
+      null;
+    const nextSiblingElement = childNode.nextSibling &&
+      childNode.nextSibling.nodeType === window.Node.ELEMENT_NODE ?
+      /** @type {HTMLElement} */ (childNode.nextSibling) :
+      null;
+    const allowJustWhitespace = Boolean(
+      previousSiblingElement && nextSiblingElement &&
+      (previousSiblingElement.tagName === 'SPAN' || nextSiblingElement.tagName === 'SPAN')
+    );
+    if (!allowJustWhitespace) return;
+  }
+
+  let textContent = childNode.textContent || '';
+  // Consecutive whitespace is redundant, unless in certain elements.
+  if (!['PRE', 'STYLE'].includes(childNode.parentElement.tagName)) {
+    textContent = textContent.replace(/\s+/g, ' ');
+  }
+
+  return textContent;
+}
+
+/**
  * @param {HTMLTemplateElement} tmpEl
  */
 function compileTemplate(tmpEl) {
@@ -88,37 +129,12 @@ function compileTemplate(tmpEl) {
 
       if (childNode.nodeType === window.Node.TEXT_NODE) {
         if (!childNode.parentElement) continue;
-        if (!childNode.textContent) continue;
 
-        // Most all-whitespace nodes can be ignored
-        // (example: the first and last nodes are typically text nodes of newlines and spaces),
-        // but not all can. Sometimes spaces are important for content (ex: lh-generated).
-        // As an heurstic, check if a text node has two sibling element nodes and that at least
-        // one is a span. This results in correct content with minimal false positives (which just means
-        // a few extra text node creations).
-        const previousSiblingElement = childNode.previousSibling &&
-          childNode.previousSibling.nodeType === window.Node.ELEMENT_NODE ?
-          /** @type {HTMLElement} */ (childNode.previousSibling) :
-          null;
-        const nextSiblingElement = childNode.nextSibling &&
-          childNode.nextSibling.nodeType === window.Node.ELEMENT_NODE ?
-          /** @type {HTMLElement} */ (childNode.nextSibling) :
-          null;
-        const allowJustWhitespace = previousSiblingElement && nextSiblingElement &&
-          (previousSiblingElement.tagName === 'SPAN' || nextSiblingElement.tagName === 'SPAN');
-        if (!allowJustWhitespace && !childNode.textContent.trim()) {
-          continue;
-        }
+        const textContent = getTextNodePossiblySignificantText(childNode);
+        if (!textContent) continue;
 
-        let textContent = childNode.textContent;
-        // Consecutive whitespace is redundant, unless in certain elements.
-        if (!['PRE', 'STYLE'].includes(childNode.parentElement.tagName)) {
-          textContent = textContent.replace(/\s+/g, ' ');
-        }
         // Escaped string value for JS.
-        textContent = JSON.stringify(textContent);
-
-        childNodesToAppend.push(textContent);
+        childNodesToAppend.push(JSON.stringify(textContent));
         continue;
       }
 
@@ -195,4 +211,8 @@ async function main() {
   fs.writeFileSync(LH_ROOT + '/report/renderer/components.js', code);
 }
 
-main();
+if (require.main === module) {
+  main();
+}
+
+module.exports = {getTextNodePossiblySignificantText};

@@ -12,6 +12,7 @@ import jsdom from 'jsdom';
 import expect from 'expect';
 import {DOM} from '../../renderer/dom.js';
 import {LH_ROOT} from '../../../root.js';
+import {getTextNodePossiblySignificantText} from '../../../build/build-report-components.js';
 
 const html = fs.readFileSync(LH_ROOT + '/report/assets/templates.html', 'utf-8');
 const {window} = new jsdom.JSDOM(html);
@@ -29,10 +30,11 @@ async function assertDOMTreeMatches(tmplEl) {
 
   function cleanUselessNodes(parent) {
     for (const child of Array.from(parent.childNodes)) {
-      if (
-        (child.nodeType === window.Node.TEXT_NODE && (child.nodeValue || '').trim().length === 0) ||
-        child.nodeType === window.Node.COMMENT_NODE
-      ) {
+      if (child.nodeType === window.Node.TEXT_NODE) {
+        const text = getTextNodePossiblySignificantText(child);
+        if (!text) parent.removeChild(child);
+        else child.textContent = text;
+      } else if (child.nodeType === window.Node.COMMENT_NODE) {
         parent.removeChild(child);
       } else if (child.nodeType === window.Node.ELEMENT_NODE) {
         cleanUselessNodes(child);
@@ -64,8 +66,6 @@ async function assertDOMTreeMatches(tmplEl) {
 
   expect(generatedFragment.childNodes.length).toEqual(originalFragment.childNodes.length);
   for (let i = 0; i < generatedFragment.childNodes.length; i++) {
-    if (tmplEl.id === 'footer') console.log(generatedFragment.childNodes[i].innerHTML);
-    if (tmplEl.id === 'footer') console.log(originalFragment.childNodes[i].innerHTML);
     expect(generatedFragment.childNodes[i].innerHTML)
       .toEqual(originalFragment.childNodes[i].innerHTML);
   }
