@@ -73,8 +73,8 @@ async function assertDOMTreeMatches(tmplEl) {
   // TODO: also assert something else to catch how SVG elements serialize the same, even if they dont get built correctly (with createAttributeNS, etc)
 }
 
-it('created component matches HTML source', async () => {
-  for (const tmpEl of tmplEls) {
-    await assertDOMTreeMatches(tmpEl);
-  }
-});
+for (const tmpEl of tmplEls) {
+  it(`${tmpEl.id} component matches HTML source`, async () => {
+      await assertDOMTreeMatches(tmpEl);
+  });
+}
