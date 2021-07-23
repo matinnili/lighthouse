@@ -87,7 +87,7 @@ function compileTemplate(tmpEl) {
    * @return {string}
    */
   function makeOrGetVarName(el) {
-    const varName = elemToVarNames.get(el) || ('v' + elemToVarNames.size);
+    const varName = elemToVarNames.get(el) || ('el' + elemToVarNames.size);
     elemToVarNames.set(el, varName);
     return varName;
   }
@@ -138,7 +138,7 @@ function compileTemplate(tmpEl) {
         continue;
       }
 
-      // @ts-expect-error: it's an Element.
+      if (!(childNode instanceof Element)) throw new Error(`Expected ${childNode} to be an element`);
       process(childNode);
 
       const childVarName = elemToVarNames.get(childNode);
