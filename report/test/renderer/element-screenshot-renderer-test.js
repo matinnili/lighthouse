@@ -13,7 +13,6 @@ import {ElementScreenshotRenderer} from '../../renderer/element-screenshot-rende
 import {Util} from '../../renderer/util.js';
 import {I18n} from '../../renderer/i18n.js';
 import {DOM} from '../../renderer/dom.js';
-import reportAssets from '../../report-assets.js';
 
 /**
  * @param {{left: number, top: number, width: number, height:number}} opts
@@ -33,7 +32,7 @@ describe('ElementScreenshotRenderer', () => {
   beforeAll(() => {
     Util.i18n = new I18n('en', {...Util.UIStrings});
 
-    const {document} = new jsdom.JSDOM(reportAssets.REPORT_TEMPLATES).window;
+    const {document} = new jsdom.JSDOM().window;
     dom = new DOM(document);
   });
 

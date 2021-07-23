@@ -55,6 +55,13 @@ export class ReportRenderer {
   }
 
   /**
+   * @param {ParentNode} _
+   */
+  setTemplateContext(_) {
+    // Removed, exists until usage is removed from CDT.
+  }
+
+  /**
    * @param {LH.ReportResult} report
    * @return {DocumentFragment}
    */
