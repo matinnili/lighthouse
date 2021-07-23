@@ -5,7 +5,13 @@
  */
 'use strict';
 
-// dumact
+/**
+ * @typedef CompiledComponent
+ * @property {HTMLTemplateElement} tmpEl
+ * @property {string} componentName
+ * @property {string} functionName
+ * @property {string} functionCode
+ */
 
 const fs = require('fs');
 const jsdom = require('jsdom');
@@ -77,6 +83,7 @@ function getTextNodePossiblySignificantText(childNode) {
 
 /**
  * @param {HTMLTemplateElement} tmpEl
+ * @return {CompiledComponent}
  */
 function compileTemplate(tmpEl) {
   const elemToVarNames = new Map();
@@ -138,7 +145,9 @@ function compileTemplate(tmpEl) {
         continue;
       }
 
-      if (!(childNode instanceof Element)) throw new Error(`Expected ${childNode} to be an element`);
+      if (!(childNode instanceof /** @type {typeof Element} */ (window.Element))) {
+        throw new Error(`Expected ${childNode} to be an element`);
+      }
       process(childNode);
 
       const childVarName = elemToVarNames.get(childNode);
@@ -170,17 +179,21 @@ function compileTemplate(tmpEl) {
   return {tmpEl, componentName, functionName, functionCode};
 }
 
-function makeGenericCreateComponentFunctionCode(processedTemplates) {
+/**
+ * @param {CompiledComponent[]} compiledTemplates
+ * @return {string}
+ */
+function makeGenericCreateComponentFunctionCode(compiledTemplates) {
   const lines = [];
 
   lines.push('switch (componentName) {');
-  for (const {componentName, functionName} of processedTemplates) {
+  for (const {componentName, functionName} of compiledTemplates) {
     lines.push(`  case '${componentName}': return ${functionName}(dom);`);
   }
   lines.push('}');
   lines.push('throw new Error(\'unexpected component: \' + componentName)');
 
-  const paramType = processedTemplates.map(t => `'${t.componentName}'`).join('|');
+  const paramType = compiledTemplates.map(t => `'${t.componentName}'`).join('|');
   const jsdoc = `
 /** @typedef {${paramType}} ComponentName */
 /**
@@ -193,8 +206,8 @@ function makeGenericCreateComponentFunctionCode(processedTemplates) {
 }
 
 async function main() {
-  const processedTemplates = [...tmplEls].map(compileTemplate);
-  processedTemplates.sort((a, b) => a.componentName.localeCompare(b.componentName));
+  const compiledTemplates = [...tmplEls].map(compileTemplate);
+  compiledTemplates.sort((a, b) => a.componentName.localeCompare(b.componentName));
   const code = `
     'use strict';
 
@@ -204,9 +217,9 @@ async function main() {
 
     /* eslint-disable max-len */
 
-    ${processedTemplates.map(t => t.functionCode).join('\n')}
+    ${compiledTemplates.map(t => t.functionCode).join('\n')}
 
-    ${makeGenericCreateComponentFunctionCode(processedTemplates)}
+    ${makeGenericCreateComponentFunctionCode(compiledTemplates)}
   `.trim();
   fs.writeFileSync(LH_ROOT + '/report/renderer/components.js', code);
 }
