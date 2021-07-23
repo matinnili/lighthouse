@@ -75,6 +75,6 @@ async function assertDOMTreeMatches(tmplEl) {
 
 for (const tmpEl of tmplEls) {
   it(`${tmpEl.id} component matches HTML source`, async () => {
-      await assertDOMTreeMatches(tmpEl);
+    await assertDOMTreeMatches(tmpEl);
   });
 }

@@ -15,7 +15,7 @@
 
 const fs = require('fs');
 const jsdom = require('jsdom');
-const {serializeArguments} = require('../lighthouse-core/gather/driver/execution-context.js');
+const ExecutionContext = require('../lighthouse-core/gather/driver/execution-context.js');
 const {LH_ROOT} = require('../root.js');
 
 const html = fs.readFileSync(LH_ROOT + '/report/assets/templates.html', 'utf-8');
@@ -119,7 +119,8 @@ function compileTemplate(tmpEl) {
     }
 
     const varName = makeOrGetVarName(el);
-    lines.push(`const ${varName} = dom.${createElementFnName}(${serializeArguments(args)});`);
+    const argsSerialzed = ExecutionContext.serializeArguments(args);
+    lines.push(`const ${varName} = dom.${createElementFnName}(${argsSerialzed});`);
 
     if (el.getAttributeNames) {
       for (const attr of el.getAttributeNames() || []) {

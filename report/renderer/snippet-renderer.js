@@ -90,17 +90,16 @@ function getLinesWhenCollapsed(details) {
 export class SnippetRenderer {
   /**
    * @param {DOM} dom
-   * @param {DocumentFragment} tmpl
    * @param {LH.Audit.Details.SnippetValue} details
    * @param {DetailsRenderer} detailsRenderer
    * @param {function} toggleExpandedFn
    * @return {DocumentFragment}
    */
-  static renderHeader(dom, tmpl, details, detailsRenderer, toggleExpandedFn) {
+  static renderHeader(dom, details, detailsRenderer, toggleExpandedFn) {
     const linesWhenCollapsed = getLinesWhenCollapsed(details);
     const canExpand = linesWhenCollapsed.length < details.lines.length;
 
-    const header = dom.createComponent('snippetHeader', tmpl);
+    const header = dom.createComponent('snippetHeader');
     dom.find('.lh-snippet__title', header).textContent = details.title;
 
     const {
@@ -344,7 +343,6 @@ export class SnippetRenderer {
 
     const header = SnippetRenderer.renderHeader(
       dom,
-      tmpl,
       details,
       detailsRenderer,
       () => snippetEl.classList.toggle('lh-snippet--expanded')

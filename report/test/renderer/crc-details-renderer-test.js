@@ -88,7 +88,7 @@ describe('DetailsRenderer', () => {
   });
 
   it('renders tree structure', () => {
-    const el = CriticalRequestChainRenderer.render(dom, dom.document(), DETAILS, detailsRenderer);
+    const el = CriticalRequestChainRenderer.render(dom, DETAILS, detailsRenderer);
     const chains = el.querySelectorAll('.crc-node');
 
     // Main request
