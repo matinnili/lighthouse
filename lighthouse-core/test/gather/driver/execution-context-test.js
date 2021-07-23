@@ -333,7 +333,7 @@ function square(val) {
     }
       return (function mainFn({a, b}, passThru) {
       return {a: abs(a), b: square(b), passThru};
-    })({"a":-5,"b":10},"hello");
+    })({"a":-5,"b":10}, "hello");
     })()`);
     expect(eval(code)).toEqual({a: 5, b: 100, passThru: 'hello'});
   });
@@ -343,7 +343,7 @@ describe('.serializeArguments', () => {
   it('should serialize a list of differently typed arguments', () => {
     const args = [undefined, 1, 'foo', null, {x: {y: {z: [2]}}}];
     expect(ExecutionContext.serializeArguments(args)).toEqual(
-      `undefined,1,"foo",null,{"x":{"y":{"z":[2]}}}`
+      `undefined, 1, "foo", null, {"x":{"y":{"z":[2]}}}`
     );
   });
 });
