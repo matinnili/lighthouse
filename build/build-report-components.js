@@ -15,7 +15,6 @@
 
 const fs = require('fs');
 const jsdom = require('jsdom');
-const ExecutionContext = require('../lighthouse-core/gather/driver/execution-context.js');
 const {LH_ROOT} = require('../root.js');
 
 const html = fs.readFileSync(LH_ROOT + '/report/assets/templates.html', 'utf-8');
@@ -49,28 +48,6 @@ function normalizeTextNodeText(childNode) {
   if (!childNode.parentElement) return;
   // Just for typescript. If a text node has no text, it's trivially not significant.
   if (!childNode.textContent) return;
-
-  // Most all-whitespace nodes can be ignored
-  // (example: the first and last nodes are typically text nodes of newlines and spaces),
-  // but not all can. Sometimes spaces are important for content (ex: lh-generated).
-  // As an heurstic, check if a text node has two sibling element nodes and that at least
-  // one is a span. This results in correct content with minimal false positives (which just means
-  // a few extra text node creations).
-  // if (!childNode.textContent.trim()) {
-  //   const previousSiblingElement = childNode.previousSibling &&
-  //     childNode.previousSibling.nodeType === window.Node.ELEMENT_NODE ?
-  //     /** @type {HTMLElement} */ (childNode.previousSibling) :
-  //     null;
-  //   const nextSiblingElement = childNode.nextSibling &&
-  //     childNode.nextSibling.nodeType === window.Node.ELEMENT_NODE ?
-  //     /** @type {HTMLElement} */ (childNode.nextSibling) :
-  //     null;
-  //   const allowJustWhitespace = Boolean(
-  //     previousSiblingElement && nextSiblingElement &&
-  //     (previousSiblingElement.tagName === 'SPAN' || nextSiblingElement.tagName === 'SPAN')
-  //   );
-  //   if (!allowJustWhitespace) return;
-  // }
 
   let textContent = childNode.textContent || '';
   // Consecutive whitespace is redundant, unless in certain elements.
@@ -119,7 +96,8 @@ function compileTemplate(tmpEl) {
     }
 
     const varName = makeOrGetVarName(el);
-    const argsSerialzed = ExecutionContext.serializeArguments(args);
+    const argsSerialzed =
+      args.map(arg => arg === undefined ? 'undefined' : JSON.stringify(arg)).join(', ');
     lines.push(`const ${varName} = dom.${createElementFnName}(${argsSerialzed});`);
 
     if (el.getAttributeNames) {
