@@ -44,7 +44,7 @@ function createFunctionCode(functionName, bodyLines, parameterNames = []) {
  * @param {ChildNode} childNode
  * @return {string|undefined}
  */
-function getTextNodePossiblySignificantText(childNode) {
+function normalizeTextNodeText(childNode) {
   // Just for typescript.
   if (!childNode.parentElement) return;
   // Just for typescript. If a text node has no text, it's trivially not significant.
@@ -56,21 +56,21 @@ function getTextNodePossiblySignificantText(childNode) {
   // As an heurstic, check if a text node has two sibling element nodes and that at least
   // one is a span. This results in correct content with minimal false positives (which just means
   // a few extra text node creations).
-  if (!childNode.textContent.trim()) {
-    const previousSiblingElement = childNode.previousSibling &&
-      childNode.previousSibling.nodeType === window.Node.ELEMENT_NODE ?
-      /** @type {HTMLElement} */ (childNode.previousSibling) :
-      null;
-    const nextSiblingElement = childNode.nextSibling &&
-      childNode.nextSibling.nodeType === window.Node.ELEMENT_NODE ?
-      /** @type {HTMLElement} */ (childNode.nextSibling) :
-      null;
-    const allowJustWhitespace = Boolean(
-      previousSiblingElement && nextSiblingElement &&
-      (previousSiblingElement.tagName === 'SPAN' || nextSiblingElement.tagName === 'SPAN')
-    );
-    if (!allowJustWhitespace) return;
-  }
+  // if (!childNode.textContent.trim()) {
+  //   const previousSiblingElement = childNode.previousSibling &&
+  //     childNode.previousSibling.nodeType === window.Node.ELEMENT_NODE ?
+  //     /** @type {HTMLElement} */ (childNode.previousSibling) :
+  //     null;
+  //   const nextSiblingElement = childNode.nextSibling &&
+  //     childNode.nextSibling.nodeType === window.Node.ELEMENT_NODE ?
+  //     /** @type {HTMLElement} */ (childNode.nextSibling) :
+  //     null;
+  //   const allowJustWhitespace = Boolean(
+  //     previousSiblingElement && nextSiblingElement &&
+  //     (previousSiblingElement.tagName === 'SPAN' || nextSiblingElement.tagName === 'SPAN')
+  //   );
+  //   if (!allowJustWhitespace) return;
+  // }
 
   let textContent = childNode.textContent || '';
   // Consecutive whitespace is redundant, unless in certain elements.
@@ -138,7 +138,7 @@ function compileTemplate(tmpEl) {
       if (childNode.nodeType === window.Node.TEXT_NODE) {
         if (!childNode.parentElement) continue;
 
-        const textContent = getTextNodePossiblySignificantText(childNode);
+        const textContent = normalizeTextNodeText(childNode);
         if (!textContent) continue;
 
         // Escaped string value for JS.
@@ -231,4 +231,4 @@ if (require.main === module) {
   main();
 }
 
-module.exports = {getTextNodePossiblySignificantText};
+module.exports = {normalizeTextNodeText};

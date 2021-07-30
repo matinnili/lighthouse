@@ -25,8 +25,8 @@ function create3pFilterComponent(dom) {
   const el5 = dom.createElement('span', 'lh-3p-ui-string');
   el5.append('Show 3rd party resources');
   const el6 = dom.createElement('span', 'lh-3p-filter-count');
-  el3.append(el4, ' ', el5, ' (', el6, ') ');
-  el2.append(el3);
+  el3.append(' ', el4, ' ', el5, ' (', el6, ') ');
+  el2.append(' ', el3, ' ');
   el0.append(el2);
   return el0;
 }
@@ -44,14 +44,14 @@ function createAuditComponent(dom) {
   const el6 = dom.createElement('span', 'lh-audit__title-and-text');
   const el7 = dom.createElement('span', 'lh-audit__title');
   const el8 = dom.createElement('span', 'lh-audit__display-text');
-  el6.append(el7, ' ', el8);
+  el6.append(' ', el7, ' ', el8, ' ');
   const el9 = dom.createElement('div', 'lh-chevron-container');
-  el4.append(el5, ' ', el6, ' ', el9);
-  el3.append(el4);
+  el4.append(' ', el5, ' ', el6, ' ', el9, ' ');
+  el3.append(' ', el4, ' ');
   const el10 = dom.createElement('div', 'lh-audit__description');
   const el11 = dom.createElement('div', 'lh-audit__stackpacks');
-  el2.append(el3, el10, el11);
-  el1.append(el2);
+  el2.append(' ', el3, ' ', el10, ' ', el11, ' ');
+  el1.append(' ', el2, ' ');
   el0.append(el1);
   return el0;
 }
@@ -66,7 +66,7 @@ function createCategoryHeaderComponent(dom) {
   el2.setAttribute('role', 'heading');
   el2.setAttribute('aria-level', '2');
   const el3 = dom.createElement('div', 'lh-category-header__description');
-  el1.append(el2, el3);
+  el1.append(' ', el2, ' ', el3, ' ');
   el0.append(el1);
   return el0;
 }
@@ -83,8 +83,8 @@ function createChevronComponent(dom) {
   el3.setAttribute('d', 'M10 50h40');
   const el4 = dom.createElementNS('http://www.w3.org/2000/svg', 'path', 'lh-chevron__line lh-chevron__line-right');
   el4.setAttribute('d', 'M90 50H50');
-  el2.append(el3, el4);
-  el1.append(el2);
+  el2.append(' ', el3, ' ', el4, ' ');
+  el1.append(' ', el2, ' ');
   el0.append(el1);
   return el0;
 }
@@ -100,10 +100,10 @@ function createClumpComponent(dom) {
   const el4 = dom.createElement('div', 'lh-audit-group__header');
   const el5 = dom.createElement('span', 'lh-audit-group__title');
   const el6 = dom.createElement('span', 'lh-audit-group__itemcount');
-  el4.append(el5, ' ', el6);
-  el3.append(el4);
-  el2.append(el3);
-  el1.append(el2);
+  el4.append(' ', el5, ' ', el6, ' ', ' ', ' ');
+  el3.append(' ', el4, ' ');
+  el2.append(' ', el3, ' ');
+  el1.append(' ', el2, ' ');
   el0.append(el1);
   return el0;
 }
@@ -120,12 +120,12 @@ function createCrcComponent(dom) {
   const el4 = dom.createElement('div', 'lh-crc__summary-value');
   const el5 = dom.createElement('span', 'lh-crc__longest_duration_label');
   const el6 = dom.createElement('b', 'lh-crc__longest_duration');
-  el4.append(el5, ' ', el6);
-  el3.append(el4);
+  el4.append(' ', el5, ' ', el6, ' ');
+  el3.append(' ', el4, ' ');
   const el7 = dom.createElement('div', 'lh-crc');
   const el8 = dom.createElement('div', 'crc-initial-nav');
-  el7.append(el8);
-  el1.append(el2, el3, el7);
+  el7.append(' ', el8, ' ', ' ');
+  el1.append(' ', el2, ' ', el3, ' ', el7, ' ');
   el0.append(el1);
   return el0;
 }
@@ -138,7 +138,7 @@ function createCrcChainComponent(dom) {
   const el1 = dom.createElement('div', 'crc-node');
   const el2 = dom.createElement('span', 'crc-node__tree-marker');
   const el3 = dom.createElement('span', 'crc-node__tree-value');
-  el1.append(el2, ' ', el3);
+  el1.append(' ', el2, ' ', el3, ' ');
   el0.append(el1);
   return el0;
 }
@@ -157,13 +157,13 @@ function createElementScreenshotComponent(dom) {
   const el5 = dom.createElementNS('http://www.w3.org/2000/svg', 'defs');
   const el6 = dom.createElementNS('http://www.w3.org/2000/svg', 'clipPath');
   el6.setAttribute('clipPathUnits', 'objectBoundingBox');
-  el5.append(el6);
-  el4.append(el5);
-  el3.append(el4);
+  el5.append(' ', el6, ' ', ' ');
+  el4.append(' ', el5, ' ');
+  el3.append(' ', el4, ' ');
   const el7 = dom.createElement('div', 'lh-element-screenshot__image');
   const el8 = dom.createElement('div', 'lh-element-screenshot__element-marker');
-  el2.append(el3, el7, el8);
-  el1.append(el2);
+  el2.append(' ', el3, ' ', el7, ' ', el8, ' ');
+  el1.append(' ', el2, ' ');
   el0.append(el1);
   return el0;
 }
@@ -176,7 +176,7 @@ function createEnvItemComponent(dom) {
   const el1 = dom.createElement('li', 'lh-env__item');
   const el2 = dom.createElement('span', 'lh-env__name');
   const el3 = dom.createElement('span', 'lh-env__description');
-  el1.append(el2, ' ', el3);
+  el1.append(' ', el2, ' ', el3, ' ');
   el0.append(el1);
   return el0;
 }
@@ -194,7 +194,8 @@ function createFooterComponent(dom) {
   const el4 = dom.createElement('div', 'lh-env__title');
   el4.append('Runtime Settings');
   const el5 = dom.createElement('ul', 'lh-env__items');
-  el3.append(el4, el5);
+  el5.append(' ', ' ');
+  el3.append(' ', el4, ' ', el5, ' ');
   const el6 = dom.createElement('div', 'lh-generated');
   const el7 = dom.createElement('b');
   el7.append('Lighthouse');
@@ -204,8 +205,8 @@ function createFooterComponent(dom) {
   el9.setAttribute('target', '_blank');
   el9.setAttribute('rel', 'noopener');
   el9.append('File an issue');
-  el6.append(' Generated by ', el7, ' ', el8, ' | ', el9);
-  el2.append(el3, el6);
+  el6.append(' ', ' Generated by ', el7, ' ', el8, ' | ', el9, ' ');
+  el2.append(' ', ' ', el3, ' ', el6, ' ');
   el0.append(el2);
   return el0;
 }
@@ -230,11 +231,11 @@ function createGaugeComponent(dom) {
   el5.setAttribute('cx', '60');
   el5.setAttribute('cy', '60');
   el5.setAttribute('stroke-width', '8');
-  el3.append(el4, el5);
-  el2.append(el3);
+  el3.append(' ', el4, ' ', el5, ' ');
+  el2.append(' ', el3, ' ');
   const el6 = dom.createElement('div', 'lh-gauge__percentage');
   const el7 = dom.createElement('div', 'lh-gauge__label');
-  el1.append(el2, el6, el7);
+  el1.append(' ', ' ', el2, ' ', el6, ' ', ' ', el7, ' ');
   el0.append(el1);
   return el0;
 }
@@ -264,7 +265,7 @@ function createGaugePwaComponent(dom) {
   const el7 = dom.createElementNS('http://www.w3.org/2000/svg', 'stop');
   el7.setAttribute('stop-color', '#009688');
   el7.setAttribute('offset', '100%');
-  el5.append(el6, el7);
+  el5.append(' ', el6, ' ', el7, ' ');
   const el8 = dom.createElementNS('http://www.w3.org/2000/svg', 'linearGradient');
   el8.setAttribute('id', 'lh-gauge--pwa__installable__shadow-gradient');
   el8.setAttribute('x1', '76.056%');
@@ -277,7 +278,7 @@ function createGaugePwaComponent(dom) {
   const el10 = dom.createElementNS('http://www.w3.org/2000/svg', 'stop');
   el10.setAttribute('stop-color', '#80CBC4');
   el10.setAttribute('offset', '100%');
-  el8.append(el9, el10);
+  el8.append(' ', el9, ' ', el10, ' ');
   const el11 = dom.createElementNS('http://www.w3.org/2000/svg', 'g');
   el11.setAttribute('id', 'lh-gauge--pwa__installable-badge');
   const el12 = dom.createElementNS('http://www.w3.org/2000/svg', 'circle');
@@ -288,8 +289,8 @@ function createGaugePwaComponent(dom) {
   const el13 = dom.createElementNS('http://www.w3.org/2000/svg', 'path');
   el13.setAttribute('fill', '#009688');
   el13.setAttribute('d', 'M10 4.167A5.835 5.835 0 0 0 4.167 10 5.835 5.835 0 0 0 10 15.833 5.835 5.835 0 0 0 15.833 10 5.835 5.835 0 0 0 10 4.167zm2.917 6.416h-2.334v2.334H9.417v-2.334H7.083V9.417h2.334V7.083h1.166v2.334h2.334v1.166z');
-  el11.append(el12, el13);
-  el4.append(el5, el8, el11);
+  el11.append(' ', el12, ' ', el13, ' ');
+  el4.append(' ', el5, ' ', el8, ' ', el11, ' ');
   const el14 = dom.createElementNS('http://www.w3.org/2000/svg', 'g');
   el14.setAttribute('stroke', 'none');
   el14.setAttribute('fill-rule', 'nonzero');
@@ -305,7 +306,7 @@ function createGaugePwaComponent(dom) {
   const el19 = dom.createElementNS('http://www.w3.org/2000/svg', 'path', 'lh-gauge--pwa__logo--secondary-color');
   el19.setAttribute('fill-rule', 'nonzero');
   el19.setAttribute('d', 'M20.3 17.91h1.48c.45 0 .85-.05 1.2-.15l.39-1.18 1.07-3.3a2.64 2.64 0 0 0-.28-.37c-.55-.6-1.36-.91-2.42-.91H18v9h2.3V17.9zm1.96-3.84c.22.22.33.5.33.87 0 .36-.1.65-.29.87-.2.23-.59.35-1.15.35h-.86v-2.41h.87c.52 0 .89.1 1.1.32z');
-  el16.append(el17, el18, el19);
+  el16.append(' ', el17, ' ', el18, ' ', el19, ' ');
   const el20 = dom.createElementNS('http://www.w3.org/2000/svg', 'rect', 'lh-gauge--pwa__component lh-gauge--pwa__na-line');
   el20.setAttribute('fill', '#FFFFFF');
   el20.setAttribute('x', '20');
@@ -320,7 +321,7 @@ function createGaugePwaComponent(dom) {
   el22.setAttribute('d', 'M33.629 19.487c-4.272 5.453-10.391 9.39-17.415 10.869L3 17.142 17.142 3 33.63 19.487z');
   const el23 = dom.createElementNS('http://www.w3.org/2000/svg', 'use');
   el23.setAttribute('href', '#lh-gauge--pwa__installable-badge');
-  el21.append(el22, el23);
+  el21.append(' ', el22, ' ', el23, ' ');
   const el24 = dom.createElementNS('http://www.w3.org/2000/svg', 'g', 'lh-gauge--pwa__component lh-gauge--pwa__check-circle');
   el24.setAttribute('transform', 'translate(18, 28)');
   const el25 = dom.createElementNS('http://www.w3.org/2000/svg', 'circle');
@@ -331,11 +332,11 @@ function createGaugePwaComponent(dom) {
   const el26 = dom.createElementNS('http://www.w3.org/2000/svg', 'path');
   el26.setAttribute('fill', 'url(#lh-gauge--pwa__check-circle__gradient)');
   el26.setAttribute('d', 'M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z');
-  el24.append(el25, el26);
-  el14.append(el15, el16, el20, el21, el24);
-  el3.append(el4, el14);
+  el24.append(' ', el25, ' ', el26, ' ');
+  el14.append(' ', ' ', el15, ' ', el16, ' ', ' ', el20, ' ', ' ', el21, ' ', ' ', el24, ' ');
+  el3.append(' ', el4, ' ', el14, ' ');
   const el27 = dom.createElement('div', 'lh-gauge__label');
-  el2.append(el3, el27);
+  el2.append(' ', el3, ' ', el27, ' ');
   el0.append(el2);
   return el0;
 }
@@ -350,7 +351,7 @@ function createHeadingComponent(dom) {
   el0.append(el1);
   const el2 = dom.createElement('div', 'lh-header-container');
   const el3 = dom.createElement('div', 'lh-scores-wrapper-placeholder');
-  el2.append(el3);
+  el2.append(' ', el3, ' ');
   el0.append(el2);
   return el0;
 }
@@ -365,8 +366,8 @@ function createMetricComponent(dom) {
   const el3 = dom.createElement('span', 'lh-metric__title');
   const el4 = dom.createElement('div', 'lh-metric__value');
   const el5 = dom.createElement('div', 'lh-metric__description');
-  el2.append(el3, ' ', el4, el5);
-  el1.append(el2);
+  el2.append(' ', el3, ' ', el4, ' ', el5, ' ');
+  el1.append(' ', el2, ' ');
   el0.append(el1);
   return el0;
 }
@@ -391,8 +392,8 @@ function createMetricsToggleComponent(dom) {
   el5.setAttribute('viewBox', '0 0 24 24');
   const el6 = dom.createElementNS('http://www.w3.org/2000/svg', 'path', 'lh-metrics-toggle__lines');
   el6.setAttribute('d', 'M4 9h16v2H4zm0 4h10v2H4z');
-  el5.append(el6);
-  el4.append(el5);
+  el5.append(' ', el6, ' ');
+  el4.append(' ', el5, ' ');
   const el7 = dom.createElement('div', 'lh-metrics-toggle__icon lh-metrics-toggle__icon--more');
   el7.setAttribute('aria-hidden', 'true');
   const el8 = dom.createElementNS('http://www.w3.org/2000/svg', 'svg');
@@ -401,10 +402,10 @@ function createMetricsToggleComponent(dom) {
   el8.setAttribute('viewBox', '0 0 24 24');
   const el9 = dom.createElementNS('http://www.w3.org/2000/svg', 'path', 'lh-metrics-toggle__lines');
   el9.setAttribute('d', 'M3 18h12v-2H3v2zM3 6v2h18V6H3zm0 7h18v-2H3v2z');
-  el8.append(el9);
-  el7.append(el8);
-  el3.append(el4, el7);
-  el1.append(el2, el3);
+  el8.append(' ', el9, ' ');
+  el7.append(' ', el8, ' ');
+  el3.append(' ', el4, ' ', el7, ' ');
+  el1.append(' ', el2, ' ', el3, ' ');
   el0.append(el1);
   return el0;
 }
@@ -422,23 +423,23 @@ function createOpportunityComponent(dom) {
   const el6 = dom.createElement('div', 'lh-load-opportunity__col lh-load-opportunity__col--one');
   const el7 = dom.createElement('span', 'lh-audit__score-icon');
   const el8 = dom.createElement('div', 'lh-audit__title');
-  el6.append(el7, ' ', el8);
+  el6.append(' ', el7, ' ', el8, ' ');
   const el9 = dom.createElement('div', 'lh-load-opportunity__col lh-load-opportunity__col--two');
   const el10 = dom.createElement('div', 'lh-load-opportunity__sparkline');
   const el11 = dom.createElement('div', 'lh-sparkline');
   const el12 = dom.createElement('div', 'lh-sparkline__bar');
   el11.append(el12);
-  el10.append(el11);
+  el10.append(' ', el11, ' ');
   const el13 = dom.createElement('div', 'lh-audit__display-text');
   const el14 = dom.createElement('div', 'lh-chevron-container');
-  el9.append(el10, el13, el14);
-  el5.append(el6, el9);
-  el4.append(el5);
-  el3.append(el4);
+  el9.append(' ', el10, ' ', el13, ' ', el14, ' ');
+  el5.append(' ', el6, ' ', el9, ' ');
+  el4.append(' ', el5, ' ');
+  el3.append(' ', el4, ' ');
   const el15 = dom.createElement('div', 'lh-audit__description');
   const el16 = dom.createElement('div', 'lh-audit__stackpacks');
-  el2.append(el3, el15, el16);
-  el1.append(el2);
+  el2.append(' ', el3, ' ', el15, ' ', el16, ' ');
+  el1.append(' ', el2, ' ');
   el0.append(el1);
   return el0;
 }
@@ -451,7 +452,7 @@ function createOpportunityHeaderComponent(dom) {
   const el1 = dom.createElement('div', 'lh-load-opportunity__header lh-load-opportunity__cols');
   const el2 = dom.createElement('div', 'lh-load-opportunity__col lh-load-opportunity__col--one');
   const el3 = dom.createElement('div', 'lh-load-opportunity__col lh-load-opportunity__col--two');
-  el1.append(el2, el3);
+  el1.append(' ', el2, ' ', el3, ' ');
   el0.append(el1);
   return el0;
 }
@@ -468,7 +469,7 @@ function createScorescaleComponent(dom) {
   el3.append('50–89');
   const el4 = dom.createElement('span', 'lh-scorescale-range lh-scorescale-range--pass');
   el4.append('90–100');
-  el1.append(el2, ' ', el3, ' ', el4);
+  el1.append(' ', el2, ' ', el3, ' ', el4, ' ');
   el0.append(el1);
   return el0;
 }
@@ -486,9 +487,9 @@ function createScoresWrapperComponent(dom) {
   const el4 = dom.createElement('div', 'pyro');
   const el5 = dom.createElement('div', 'before');
   const el6 = dom.createElement('div', 'after');
-  el4.append(el5, el6);
-  el3.append(el4);
-  el2.append(el3);
+  el4.append(' ', el5, ' ', el6, ' ');
+  el3.append(' ', el4, ' ');
+  el2.append(' ', el3, ' ');
   el0.append(el2);
   return el0;
 }
@@ -501,7 +502,7 @@ function createSnippetComponent(dom) {
   const el1 = dom.createElement('div', 'lh-snippet');
   const el2 = dom.createElement('style');
   el2.append('\n          :root {\n            --snippet-highlight-light: #fbf1f2;\n            --snippet-highlight-dark: #ffd6d8;\n          }\n\n         .lh-snippet__header {\n          position: relative;\n          overflow: hidden;\n          padding: 10px;\n          border-bottom: none;\n          color: var(--snippet-color);\n          background-color: var(--snippet-background-color);\n          border: 1px solid var(--report-border-color-secondary);\n        }\n        .lh-snippet__title {\n          font-weight: bold;\n          float: left;\n        }\n        .lh-snippet__node {\n          float: left;\n          margin-left: 4px;\n        }\n        .lh-snippet__toggle-expand {\n          padding: 1px 7px;\n          margin-top: -1px;\n          margin-right: -7px;\n          float: right;\n          background: transparent;\n          border: none;\n          cursor: pointer;\n          font-size: 14px;\n          color: #0c50c7;\n        }\n\n        .lh-snippet__snippet {\n          overflow: auto;\n          border: 1px solid var(--report-border-color-secondary);\n        }\n        /* Container needed so that all children grow to the width of the scroll container */\n        .lh-snippet__snippet-inner {\n          display: inline-block;\n          min-width: 100%;\n        }\n\n        .lh-snippet:not(.lh-snippet--expanded) .lh-snippet__show-if-expanded {\n          display: none;\n        }\n        .lh-snippet.lh-snippet--expanded .lh-snippet__show-if-collapsed {\n          display: none;\n        }\n\n        .lh-snippet__line {\n          background: white;\n          white-space: pre;\n          display: flex;\n        }\n        .lh-snippet__line:not(.lh-snippet__line--message):first-child {\n          padding-top: 4px;\n        }\n        .lh-snippet__line:not(.lh-snippet__line--message):last-child {\n          padding-bottom: 4px;\n        }\n        .lh-snippet__line--content-highlighted {\n          background: var(--snippet-highlight-dark);\n        }\n        .lh-snippet__line--message {\n          background: var(--snippet-highlight-light);\n        }\n        .lh-snippet__line--message .lh-snippet__line-number {\n          padding-top: 10px;\n          padding-bottom: 10px;\n        }\n        .lh-snippet__line--message code {\n          padding: 10px;\n          padding-left: 5px;\n          color: var(--color-fail);\n          font-family: var(--report-font-family);\n        }\n        .lh-snippet__line--message code {\n          white-space: normal;\n        }\n        .lh-snippet__line-icon {\n          padding-top: 10px;\n          display: none;\n        }\n        .lh-snippet__line--message .lh-snippet__line-icon {\n          display: block;\n        }\n        .lh-snippet__line-icon:before {\n          content: "";\n          display: inline-block;\n          vertical-align: middle;\n          margin-right: 4px;\n          width: var(--score-icon-size);\n          height: var(--score-icon-size);\n          background-image: var(--fail-icon-url);\n        }\n        .lh-snippet__line-number {\n          flex-shrink: 0;\n          width: 40px;\n          text-align: right;\n          font-family: monospace;\n          padding-right: 5px;\n          margin-right: 5px;\n          color: var(--color-gray-600);\n          user-select: none;\n        }\n    ');
-  el1.append(el2);
+  el1.append(' ', el2, ' ');
   el0.append(el1);
   return el0;
 }
@@ -513,7 +514,7 @@ function createSnippetContentComponent(dom) {
   const el0 = dom.document().createDocumentFragment();
   const el1 = dom.createElement('div', 'lh-snippet__snippet');
   const el2 = dom.createElement('div', 'lh-snippet__snippet-inner');
-  el1.append(el2);
+  el1.append(' ', el2, ' ');
   el0.append(el1);
   return el0;
 }
@@ -529,8 +530,8 @@ function createSnippetHeaderComponent(dom) {
   const el4 = dom.createElement('button', 'lh-snippet__toggle-expand');
   const el5 = dom.createElement('span', 'lh-snippet__btn-label-collapse lh-snippet__show-if-expanded');
   const el6 = dom.createElement('span', 'lh-snippet__btn-label-expand lh-snippet__show-if-collapsed');
-  el4.append(el5, ' ', el6);
-  el1.append(el2, el3, el4);
+  el4.append(' ', el5, ' ', el6, ' ');
+  el1.append(' ', el2, ' ', el3, ' ', el4, ' ');
   el0.append(el1);
   return el0;
 }
@@ -544,7 +545,7 @@ function createSnippetLineComponent(dom) {
   const el2 = dom.createElement('div', 'lh-snippet__line-number');
   const el3 = dom.createElement('div', 'lh-snippet__line-icon');
   const el4 = dom.createElement('code');
-  el1.append(el2, el3, el4);
+  el1.append(' ', el2, ' ', el3, ' ', el4, ' ');
   el0.append(el1);
   return el0;
 }
@@ -575,7 +576,7 @@ function createTopbarComponent(dom) {
   el7.setAttribute('stop-color', '#262626');
   el7.setAttribute('stop-opacity', '0');
   el7.setAttribute('offset', '100%');
-  el5.append(el6, el7);
+  el5.append(' ', el6, ' ', el7, ' ');
   const el8 = dom.createElementNS('http://www.w3.org/2000/svg', 'linearGradient');
   el8.setAttribute('x1', '100%');
   el8.setAttribute('y1', '50%');
@@ -590,7 +591,7 @@ function createTopbarComponent(dom) {
   el10.setAttribute('stop-color', '#262626');
   el10.setAttribute('stop-opacity', '0');
   el10.setAttribute('offset', '100%');
-  el8.append(el9, el10);
+  el8.append(' ', el9, ' ', el10, ' ');
   const el11 = dom.createElementNS('http://www.w3.org/2000/svg', 'linearGradient');
   el11.setAttribute('x1', '58.764%');
   el11.setAttribute('y1', '65.756%');
@@ -605,7 +606,7 @@ function createTopbarComponent(dom) {
   el13.setAttribute('stop-color', '#262626');
   el13.setAttribute('stop-opacity', '0');
   el13.setAttribute('offset', '100%');
-  el11.append(el12, el13);
+  el11.append(' ', el12, ' ', el13, ' ');
   const el14 = dom.createElementNS('http://www.w3.org/2000/svg', 'linearGradient');
   el14.setAttribute('x1', '41.635%');
   el14.setAttribute('y1', '20.358%');
@@ -620,8 +621,8 @@ function createTopbarComponent(dom) {
   el16.setAttribute('stop-color', '#FFF');
   el16.setAttribute('stop-opacity', '0');
   el16.setAttribute('offset', '100%');
-  el14.append(el15, el16);
-  el4.append(el5, el8, el11, el14);
+  el14.append(' ', el15, ' ', el16, ' ');
+  el4.append(' ', el5, ' ', el8, ' ', el11, ' ', el14, ' ');
   const el17 = dom.createElementNS('http://www.w3.org/2000/svg', 'g');
   el17.setAttribute('fill', 'none');
   el17.setAttribute('fill-rule', 'evenodd');
@@ -655,8 +656,8 @@ function createTopbarComponent(dom) {
   el24.setAttribute('fill-rule', 'nonzero');
   el24.setAttribute('d', 'M6 0l4.125 2.625v3.75H12v2.25h-1.688l1.5 9.375H.188l1.5-9.375H0v-2.25h1.875V2.648z');
   el24.setAttribute('transform', 'translate(6 3)');
-  el17.append(el18, el19, el20, el21, el22, el23, el24);
-  el3.append(el4, el17);
+  el17.append(' ', el18, ' ', el19, ' ', el20, ' ', el21, ' ', el22, ' ', el23, ' ', el24, ' ');
+  el3.append(' ', el4, ' ', el17, ' ');
   const el25 = dom.createElement('a', 'lh-topbar__url');
   el25.setAttribute('href', '');
   el25.setAttribute('target', '_blank');
@@ -678,8 +679,8 @@ function createTopbarComponent(dom) {
   el29.setAttribute('fill', 'none');
   const el30 = dom.createElementNS('http://www.w3.org/2000/svg', 'path');
   el30.setAttribute('d', 'M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z');
-  el28.append(el29, el30);
-  el27.append(el28);
+  el28.append(' ', el29, ' ', el30, ' ');
+  el27.append(' ', el28, ' ');
   const el31 = dom.createElement('div', 'lh-tools__dropdown');
   el31.setAttribute('id', 'lh-tools-dropdown');
   el31.setAttribute('role', 'menu');
@@ -732,9 +733,9 @@ function createTopbarComponent(dom) {
   el39.setAttribute('href', '#');
   el39.setAttribute('data-i18n', 'dropdownDarkTheme');
   el39.setAttribute('data-action', 'toggle-dark');
-  el31.append(el32, el33, el34, el35, el36, el37, el38, el39);
-  el26.append(el27, el31);
-  el2.append(el3, el25, el26);
+  el31.append(' ', el32, ' ', el33, ' ', el34, ' ', el35, ' ', el36, ' ', el37, ' ', el38, ' ', el39, ' ');
+  el26.append(' ', el27, ' ', el31, ' ');
+  el2.append(' ', ' ', el3, ' ', el25, ' ', el26, ' ');
   el0.append(el2);
   return el0;
 }
@@ -747,7 +748,7 @@ function createWarningsToplevelComponent(dom) {
   const el1 = dom.createElement('div', 'lh-warnings lh-warnings--toplevel');
   const el2 = dom.createElement('p', 'lh-warnings__msg');
   const el3 = dom.createElement('ul');
-  el1.append(el2, el3);
+  el1.append(' ', el2, ' ', el3, ' ');
   el0.append(el1);
   return el0;
 }
