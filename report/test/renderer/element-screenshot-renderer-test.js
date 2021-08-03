@@ -65,17 +65,17 @@ describe('ElementScreenshotRenderer', () => {
     const htmlFormatted = el.innerHTML.replace(/(<\w+ )/g, '\n$1');
     /* eslint-disable max-len */
     expect(htmlFormatted).toMatchInlineSnapshot(`
-"
-<div class=\\"lh-element-screenshot__content\\" style=\\"top: -500px;\\">
-<div class=\\"lh-element-screenshot__mask\\" style=\\"width: 500px; height: 500px; clip-path: url(#clip-0);\\">
-<svg height=\\"0\\" width=\\"0\\"><defs>
+" 
+<div class=\\"lh-element-screenshot__content\\" style=\\"top: -500px;\\"> 
+<div class=\\"lh-element-screenshot__mask\\" style=\\"width: 500px; height: 500px; clip-path: url(#clip-0);\\"> 
+<svg height=\\"0\\" width=\\"0\\"> <defs> 
 <clipPath clipPathUnits=\\"objectBoundingBox\\" id=\\"clip-0\\">
 <polygon points=\\"0,0             1,0            1,0.1          0,0.1\\"></polygon>
 <polygon points=\\"0,0.7     1,0.7    1,1               0,1\\"></polygon>
 <polygon points=\\"0,0.1        0.1,0.1 0.1,0.7 0,0.7\\"></polygon>
-<polygon points=\\"0.5,0.1 1,0.1       1,0.7       0.5,0.7\\"></polygon></clipPath></defs></svg></div>
-<div class=\\"lh-element-screenshot__image\\" style=\\"width: 500px; height: 500px; background-position-y: 0px; background-position-x: 0px; background-size: 1000px 1000px;\\"></div>
-<div class=\\"lh-element-screenshot__element-marker\\" style=\\"width: 200px; height: 300px; left: 50px; top: 50px;\\"></div></div>"
+<polygon points=\\"0.5,0.1 1,0.1       1,0.7       0.5,0.7\\"></polygon></clipPath>  </defs> </svg> </div> 
+<div class=\\"lh-element-screenshot__image\\" style=\\"width: 500px; height: 500px; background-position-y: 0px; background-position-x: 0px; background-size: 1000px 1000px;\\"></div> 
+<div class=\\"lh-element-screenshot__element-marker\\" style=\\"width: 200px; height: 300px; left: 50px; top: 50px;\\"></div> </div> "
 `);
     /* eslint-enable max-len */
   });
