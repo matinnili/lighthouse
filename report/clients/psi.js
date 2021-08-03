@@ -26,7 +26,7 @@ import {Util} from '../renderer/util.js';
 
 /* global window */
 
-/** @typedef {{scoreGaugeEl: Element, perfCategoryEl: Element, finalScreenshotDataUri: string|null, scoreScaleEl: Element, installFeatures: Function}} prepareLabDataData */
+/** @typedef {{scoreGaugeEl: Element, perfCategoryEl: Element, finalScreenshotDataUri: string|null, scoreScaleEl: Element, installFeatures: Function}} PrepareLabDataResult */
 
 /**
  * Returns all the elements that PSI needs to render the report
@@ -40,7 +40,7 @@ import {Util} from '../renderer/util.js';
  *
  * @param {LH.Result | string} LHResult The stringified version of {LH.Result}
  * @param {Document} document The host page's window.document
- * @return {prepareLabDataData}
+ * @return {PrepareLabDataResult}
  */
 export function prepareLabData(LHResult, document) {
   const lhResult = (typeof LHResult === 'string') ?

@@ -9,7 +9,7 @@
 
 /* global document window */
 
-/** @typedef {import('../clients/psi.js').prepareLabDataData} prepareLabDataData */
+/** @typedef {import('../clients/psi.js').PrepareLabDataResult} PrepareLabDataResult */
 
 (async function __initPsiReports__() {
   // @ts-expect-error
@@ -25,7 +25,7 @@
     await distinguishLHR(lhr, tabId);
 
     // @ts-expect-error
-    const pldd = /** @type {prepareLabDataData} */ (window.prepareLabData(lhr, document));
+    const pldd = /** @type {PrepareLabDataResult} */ (window.prepareLabData(lhr, document));
     const {scoreGaugeEl, perfCategoryEl,
       finalScreenshotDataUri, scoreScaleEl, installFeatures} = pldd;
 
