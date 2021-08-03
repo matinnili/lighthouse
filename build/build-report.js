@@ -25,7 +25,6 @@ async function buildStandaloneReport() {
     file: 'dist/report/standalone.js',
     format: 'iife',
   });
-  console.log('dist/report/standalone.js written');
 }
 
 async function buildPsiReport() {
@@ -40,7 +39,6 @@ async function buildPsiReport() {
     file: 'dist/report/psi.js',
     format: 'esm',
   });
-  console.log('dist/report/psi.js written');
 }
 
 async function buildViewerReport() {
@@ -55,7 +53,6 @@ async function buildViewerReport() {
     file: 'dist/report/viewer.js',
     format: 'iife',
   });
-  console.log('dist/report/viewer.js written');
 }
 
 async function buildTreemapReport() {
@@ -70,7 +67,6 @@ async function buildTreemapReport() {
     file: 'dist/report/treemap.js',
     format: 'iife',
   });
-  console.log('dist/report/treemap.js written');
 }
 
 async function buildEsModulesBundle() {
@@ -85,18 +81,23 @@ async function buildEsModulesBundle() {
     file: 'dist/report/bundle.js',
     format: 'esm',
   });
-  console.log('dist/report/bundle.js written');
 }
 
 if (require.main === module) {
-  if (process.argv.includes('--psi')) {
-    buildPsiReport();
-  } else if (process.argv.includes('--standalone')) {
-    buildStandaloneReport();
-  } else {
+  if (process.argv.length <= 2) {
     buildStandaloneReport();
     buildEsModulesBundle();
     buildPsiReport();
+  }
+
+  if (process.argv.includes('--psi')) {
+    buildPsiReport();
+  }
+  if (process.argv.includes('--standalone')) {
+    buildStandaloneReport();
+  }
+  if (process.argv.includes('--esm')) {
+    buildEsModulesBundle();
   }
 }
 
