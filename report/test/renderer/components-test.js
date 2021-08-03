@@ -81,8 +81,6 @@ async function assertDOMTreeMatches(tmplEl) {
     expect(generatedFragment.childNodes[i].innerHTML)
       .toEqual(originalFragment.childNodes[i].innerHTML);
   }
-
-  // TODO: also assert something else to catch how SVG elements serialize the same, even if they dont get built correctly (with createAttributeNS, etc)
 }
 
 for (const tmpEl of tmplEls) {
