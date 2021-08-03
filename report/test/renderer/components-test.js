@@ -31,7 +31,7 @@ async function assertDOMTreeMatches(tmplEl) {
   /**
    * @param {HTMLElement} parentEl
    */
-  function cleanUselessNodes(parentEl) {
+  function normalizeNodes(parentEl) {
     for (const child of Array.from(parentEl.childNodes)) {
       if (child.nodeType === window.Node.TEXT_NODE) {
         const text = normalizeTextNodeText(child);
@@ -40,7 +40,7 @@ async function assertDOMTreeMatches(tmplEl) {
       } else if (child.nodeType === window.Node.COMMENT_NODE) {
         parentEl.removeChild(child);
       } else if (child.nodeType === window.Node.ELEMENT_NODE) {
-        cleanUselessNodes(child);
+        normalizeNodes(child);
       }
     }
   }
@@ -48,7 +48,7 @@ async function assertDOMTreeMatches(tmplEl) {
   /**
    * @param {HTMLElement} rootEl
    */
-  function reorderAttributes(rootEl) {
+  function normalizeAttributes(rootEl) {
     for (const el of rootEl.querySelectorAll('*')) {
       const clonedAttrNodes = Array.from(el.attributes);
       // Clear existing.
@@ -67,8 +67,14 @@ async function assertDOMTreeMatches(tmplEl) {
   /** @type {DocumentFragment} */
   const generatedFragment = dom.createComponent(tmplEl.id);
   const originalFragment = tmplEl.content.cloneNode(true);
-  cleanUselessNodes(originalFragment);
-  reorderAttributes(originalFragment);
+
+  // We rely on innerHTML to do a comparison, so we must normalize some things about the
+  // original element for two reasons:
+  // 1) Some nodes are purposefully not created in components.js; or the text content is trimmed.
+  normalizeNodes(originalFragment);
+  // 2) jsdom reorders the class attribute in unexpected ways. We always author it as the first attribute, but
+  //    sometimes jsdom moves it around.
+  normalizeAttributes(originalFragment);
 
   expect(generatedFragment.childNodes.length).toEqual(originalFragment.childNodes.length);
   for (let i = 0; i < generatedFragment.childNodes.length; i++) {
