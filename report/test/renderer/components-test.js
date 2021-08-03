@@ -28,34 +28,40 @@ async function assertDOMTreeMatches(tmplEl) {
 
   const dom = new DOM(window.document);
 
-  function cleanUselessNodes(parent) {
-    for (const child of Array.from(parent.childNodes)) {
+  /**
+   * @param {HTMLElement} parentEl
+   */
+  function cleanUselessNodes(parentEl) {
+    for (const child of Array.from(parentEl.childNodes)) {
       if (child.nodeType === window.Node.TEXT_NODE) {
         const text = normalizeTextNodeText(child);
-        if (!text) parent.removeChild(child);
+        if (!text) parentEl.removeChild(child);
         else child.textContent = text;
       } else if (child.nodeType === window.Node.COMMENT_NODE) {
-        parent.removeChild(child);
+        parentEl.removeChild(child);
       } else if (child.nodeType === window.Node.ELEMENT_NODE) {
         cleanUselessNodes(child);
       }
     }
   }
 
-  function reorderAttributes(elem) {
-    elem.querySelectorAll('*').forEach(elem => {
-      const clonedAttrNodes = Array.from(elem.attributes);
-      // Clear existing
-      clonedAttrNodes.forEach(attr => elem.removeAttribute(attr.localName));
+  /**
+   * @param {HTMLElement} rootEl
+   */
+  function reorderAttributes(rootEl) {
+    for (const el of rootEl.querySelectorAll('*')) {
+      const clonedAttrNodes = Array.from(el.attributes);
+      // Clear existing.
+      clonedAttrNodes.forEach(attr => el.removeAttribute(attr.localName));
       // Apply class first, then the rest.
       const classAttr = clonedAttrNodes.find(attr => attr.localName === 'class');
       if (classAttr) {
-        elem.setAttributeNode(classAttr);
+        el.setAttributeNode(classAttr);
       }
       clonedAttrNodes.forEach(attr => {
-        if (attr !== classAttr) elem.setAttributeNode(attr);
+        if (attr !== classAttr) el.setAttributeNode(attr);
       });
-    });
+    }
   }
 
   /** @type {DocumentFragment} */
