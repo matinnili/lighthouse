@@ -7,9 +7,12 @@
 
 /** @fileoverview This file is a glorified call of prepareLabData. */
 
-/* global document window prepareLabData */
+/* global document window */
 
-(async function __initLighthouseReport__() {
+/** @typedef {import('../clients/psi.js').prepareLabDataData} prepareLabDataData */
+
+(async function __initPsiReports__() {
+  // @ts-expect-error
   const mobileLHR = window.__LIGHTHOUSE_JSON__;
   const desktopLHR = JSON.parse(JSON.stringify(mobileLHR));
 
@@ -21,15 +24,20 @@
   for (const [tabId, lhr] of Object.entries(lhrs)) {
     await distinguishLHR(lhr, tabId);
 
+    // @ts-expect-error
+    const pldd = /** @type {prepareLabDataData} */ (window.prepareLabData(lhr, document));
     const {scoreGaugeEl, perfCategoryEl,
-      finalScreenshotDataUri, scoreScaleEl, installFeatures} = prepareLabData(lhr, document);
+      finalScreenshotDataUri, scoreScaleEl, installFeatures} = pldd;
 
-    const container = document.querySelector(`#${tabId}`).querySelector('main');
+    const container = document.querySelector(`#${tabId} main`);
+    if (!container) throw new Error('Unexpected DOM. Bailing.');
     container.append(scoreGaugeEl);
     container.append(scoreScaleEl);
-    const imgEl = document.createElement('img');
-    imgEl.src = finalScreenshotDataUri;
-    container.append(imgEl);
+    if (finalScreenshotDataUri) {
+      const imgEl = document.createElement('img');
+      imgEl.src = finalScreenshotDataUri;
+      container.append(imgEl);
+    }
     container.append(perfCategoryEl);
     installFeatures(container);
   }
@@ -39,7 +47,7 @@
 /**
  * Tweak the LHR to make the desktop and mobile reports easier to identify.
  * Adjusted: Perf category name and score, and emoji placed on top of key screenshots.
- * @param {LH.Report} lhr
+ * @param {LH.Result} lhr
  * @param {string} tabId
  */
 async function distinguishLHR(lhr, tabId) {
@@ -48,11 +56,14 @@ async function distinguishLHR(lhr, tabId) {
     lhr.categories.performance.score = 0.81;
   }
 
-  const finalSS = lhr.audits['final-screenshot'].details.data;
-  lhr.audits['final-screenshot'].details.data = await decorateScreenshot(finalSS, tabId);
+  const finalSSDetails = lhr.audits['final-screenshot'] && lhr.audits['final-screenshot'].details;
+  if (!finalSSDetails || finalSSDetails.type !== 'screenshot') throw new Error();
+  finalSSDetails.data = await decorateScreenshot(finalSSDetails.data, tabId);
 
-  const fullPageScreenshot = lhr.audits['full-page-screenshot'].details.screenshot.data;
-  lhr.audits['full-page-screenshot'].details.screenshot.data = await decorateScreenshot(fullPageScreenshot, tabId); // eslint-disable-line max-len
+  const fpSSDetails = lhr.audits['full-page-screenshot'] &&
+      lhr.audits['full-page-screenshot'].details;
+  if (!fpSSDetails || fpSSDetails.type !== 'full-page-screenshot') throw new Error();
+  fpSSDetails.screenshot.data = await decorateScreenshot(fpSSDetails.screenshot.data, tabId);
 }
 
 /**
@@ -73,8 +84,8 @@ async function decorateScreenshot(datauri, tabId) {
   c.height = img.height;
 
   const ctx = c.getContext('2d');
+  if (!ctx) throw new Error();
   ctx.drawImage(img, 0, 0);
-  console.log(img.width);
   ctx.font = `${img.width / 2}px serif`;
   ctx.textAlign = 'center';
   ctx.globalAlpha = 0.7;

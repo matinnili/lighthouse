@@ -24,6 +24,10 @@ import {PerformanceCategoryRenderer} from '../renderer/performance-category-rend
 import {ReportUIFeatures} from '../renderer/report-ui-features.js';
 import {Util} from '../renderer/util.js';
 
+/* global window */
+
+/** @typedef {{scoreGaugeEl: Element, perfCategoryEl: Element, finalScreenshotDataUri: string|null, scoreScaleEl: Element, installFeatures: Function}} prepareLabDataData */
+
 /**
  * Returns all the elements that PSI needs to render the report
  * We expose this helper method to minimize the 'public' API surface of the renderer
@@ -36,7 +40,7 @@ import {Util} from '../renderer/util.js';
  *
  * @param {LH.Result | string} LHResult The stringified version of {LH.Result}
  * @param {Document} document The host page's window.document
- * @return {{scoreGaugeEl: Element, perfCategoryEl: Element, finalScreenshotDataUri: string|null, scoreScaleEl: Element, installFeatures: Function}}
+ * @return {prepareLabDataData}
  */
 export function prepareLabData(LHResult, document) {
   const lhResult = (typeof LHResult === 'string') ?
@@ -147,3 +151,6 @@ function _getFinalScreenshot(perfCategory) {
   if (!details || details.type !== 'screenshot') return null;
   return details.data;
 }
+
+// @ts-expect-error
+window.prepareLabData = prepareLabData;
