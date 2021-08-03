@@ -89,15 +89,14 @@ async function buildEsModulesBundle() {
 }
 
 if (require.main === module) {
-  if (process.argv.includes('--also-psi')) {
+  if (process.argv.includes('--psi')) {
     buildPsiReport();
-  }
-
-  if (process.argv.includes('--only-standalone')) {
+  } else if (process.argv.includes('--standalone')) {
     buildStandaloneReport();
   } else {
     buildStandaloneReport();
     buildEsModulesBundle();
+    buildPsiReport();
   }
 }
 

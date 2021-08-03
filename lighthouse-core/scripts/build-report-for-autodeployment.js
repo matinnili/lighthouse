@@ -31,7 +31,7 @@ const DIST = path.join(LH_ROOT, `dist/now`);
     'ɑrabic': swapLocale(lhr, 'ar').lhr,
     'xl-accented': swapLocale(lhr, 'en-XL').lhr,
     'error': errorLhr,
-    'solocat': tweakLhrForPsi(lhr),
+    'single-category': tweakLhrForPsi(lhr),
   };
 
   // Generate and write reports
