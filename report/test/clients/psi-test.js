@@ -28,7 +28,7 @@ const sampleResultsStr =
 
 /* eslint-env jest */
 
-describe('DOM', () => {
+describe('PSI', () => {
   let document;
   beforeAll(() => {
     global.Util = Util;

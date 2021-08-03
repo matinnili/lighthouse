@@ -152,5 +152,8 @@ function _getFinalScreenshot(perfCategory) {
   return details.data;
 }
 
-// @ts-expect-error
-window.prepareLabData = prepareLabData;
+// TODO: remove with report API refactor.
+if (typeof window !== 'undefined') {
+  // @ts-expect-error
+  window.prepareLabData = prepareLabData;
+}
