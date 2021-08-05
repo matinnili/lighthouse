@@ -213,8 +213,10 @@ describe('NavigationRunner', () => {
       // Validate that the toplevel warning is added, finalURL is set, and error is kept.
       const artifactIds = Object.keys(artifacts).sort();
       expect(artifactIds).toEqual(['LighthouseRunWarnings', 'PageLoadError', 'URL']);
+
       if (!artifacts.URL) throw new Error(`URL should exist`);
       expect(artifacts.URL.finalUrl).toEqual('http://example.com');
+      expect(artifacts.LighthouseRunWarnings).toHaveLength(1);
     });
   });
 

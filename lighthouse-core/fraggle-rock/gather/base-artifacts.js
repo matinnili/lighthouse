@@ -77,8 +77,7 @@ function finalizeArtifacts(baseArtifacts, gathererArtifacts) {
   artifacts.Timing = log.getTimeEntries();
   artifacts.LighthouseRunWarnings = deduplicateWarnings(warnings);
 
-  const hadPageError = Boolean(artifacts.PageLoadError);
-  if (hadPageError && !artifacts.URL.finalUrl) {
+  if (artifacts.PageLoadError && !artifacts.URL.finalUrl) {
     artifacts.URL.finalUrl = artifacts.URL.requestedUrl;
   }
 
