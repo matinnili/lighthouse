@@ -77,6 +77,11 @@ function finalizeArtifacts(baseArtifacts, gathererArtifacts) {
   artifacts.Timing = log.getTimeEntries();
   artifacts.LighthouseRunWarnings = deduplicateWarnings(warnings);
 
+  const hadPageError = Boolean(artifacts.PageLoadError);
+  if (hadPageError && !artifacts.URL.finalUrl) {
+    artifacts.URL.finalUrl = artifacts.URL.requestedUrl;
+  }
+
   // Check that the runner remembered to mutate the special-case URL artifact.
   if (!artifacts.URL.requestedUrl) throw new Error('Runner did not set requestedUrl');
   if (!artifacts.URL.finalUrl) throw new Error('Runner did not set finalUrl');
