@@ -7,11 +7,12 @@
 import Audit_ from './audit';
 import Budget_ from './budget';
 import * as I18n from './i18n';
+import Protocol_ from './protocol';
 import StructuredData_ from './structured-data';
 import Treemap_ from './treemap';
 
+// Construct hierarchy of global types under the LH namespace.
 declare global {
-  // Construct hierarchy of global types under the LH namespace.
   module LH {
     export import Audit = Audit_;
     export import Budget = Budget_;
@@ -23,8 +24,8 @@ declare global {
     export import IcuMessagePaths = I18n.IcuMessagePaths;
     export import I18NRendererStrings = I18n.I18NRendererStrings;
 
+    export import Protocol = Protocol_;
     export import StructuredData = StructuredData_;
-
     export import Treemap = Treemap_;
   }
 }
