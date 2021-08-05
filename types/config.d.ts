@@ -6,6 +6,7 @@
  */
 
 import AuditClass = require('../lighthouse-core/audits/audit.js');
+import Gatherer from './gatherer';
 import {IcuMessage} from './i18n';
 
 interface ClassOf<T> {
@@ -62,7 +63,7 @@ declare global {
        * This information is typically set by the CLI or other channel integrations.
        */
       export interface FRContext {
-        gatherMode?: LH.Gatherer.GatherMode;
+        gatherMode?: Gatherer.GatherMode;
         configPath?: string;
         settingsOverrides?: LH.SharedFlagsSettings;
       }

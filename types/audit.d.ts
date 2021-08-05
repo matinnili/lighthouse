@@ -5,6 +5,7 @@
  */
 
 import AuditDetails from './audit-details';
+import Gatherer from './gatherer';
 import {FormattedIcu, IcuMessage} from './i18n';
 
 declare module Audit {
@@ -60,7 +61,7 @@ declare module Audit {
     /** A string identifying how the score should be interpreted for display. */
     scoreDisplayMode?: Audit.ScoreDisplayMode;
     /** A list of gather modes that this audit is applicable to. */
-    supportedModes?: LH.Gatherer.GatherMode[],
+    supportedModes?: Gatherer.GatherMode[],
   }
 
   interface ByteEfficiencyItem extends AuditDetails.OpportunityItem {
