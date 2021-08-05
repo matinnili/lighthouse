@@ -8,6 +8,7 @@ import Audit_ from './audit';
 import Budget_ from './budget';
 import * as I18n from './i18n';
 import StructuredData_ from './structured-data';
+import Treemap_ from './treemap';
 
 declare global {
   // Construct hierarchy of global types under the LH namespace.
@@ -23,5 +24,7 @@ declare global {
     export import I18NRendererStrings = I18n.I18NRendererStrings;
 
     export import StructuredData = StructuredData_;
+
+    export import Treemap = Treemap_;
   }
 }
