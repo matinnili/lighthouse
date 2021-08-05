@@ -5,6 +5,7 @@
  */
 
 import LHError = require('../lighthouse-core/lib/lh-error.js');
+import {I18NRendererStrings, IcuMessagePaths} from './i18n';
 
 declare global {
   module LH {

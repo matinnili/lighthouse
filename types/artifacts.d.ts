@@ -13,6 +13,8 @@ import _ArbitraryEqualityMap = require('../lighthouse-core/lib/arbitrary-equalit
 
 type _TaskNode = import('../lighthouse-core/lib/tracehouse/main-thread-tasks.js').TaskNode;
 
+import {IcuMessage} from './i18n';
+
 type LanternSimulator = InstanceType<typeof _LanternSimulator>;
 
 declare global {

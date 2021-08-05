@@ -12,6 +12,8 @@ import ExecutionContext = require('../lighthouse-core/gather/driver/execution-co
 import Fetcher = require('../lighthouse-core/gather/fetcher');
 import ArbitraryEqualityMap = require('../lighthouse-core/lib/arbitrary-equality-map');
 
+import {IcuMessage} from './i18n';
+
 declare global {
   module LH.Gatherer {
     /** The Lighthouse wrapper around a raw CDP session. */
