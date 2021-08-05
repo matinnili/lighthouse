@@ -6,6 +6,7 @@
  */
 
 import AuditClass = require('../lighthouse-core/audits/audit.js');
+import {IcuMessage} from './i18n';
 
 interface ClassOf<T> {
   new (): T;
