@@ -5,12 +5,14 @@
  */
 
 import Audit_ from './audit';
+import Budget_ from './budget';
 import * as I18n from './i18n';
 
 declare global {
   // Construct hierarchy of global types under the LH namespace.
   module LH {
     export import Audit = Audit_;
+    export import Budget = Budget_;
 
     // i18n.d.ts.
     export import IcuMessage = I18n.IcuMessage;
