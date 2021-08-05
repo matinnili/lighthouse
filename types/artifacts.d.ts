@@ -13,6 +13,7 @@ import _ArbitraryEqualityMap = require('../lighthouse-core/lib/arbitrary-equalit
 
 type _TaskNode = import('../lighthouse-core/lib/tracehouse/main-thread-tasks.js').TaskNode;
 
+import Gatherer from './gatherer';
 import {IcuMessage} from './i18n';
 
 type LanternSimulator = InstanceType<typeof _LanternSimulator>;
@@ -143,7 +144,7 @@ declare global {
       /** Screenshot of the entire page (rather than just the above the fold content). */
       FullPageScreenshot: Artifacts.FullPageScreenshot | null;
       /** Information about how Lighthouse artifacts were gathered. */
-      GatherContext: {gatherMode: LH.Gatherer.GatherMode};
+      GatherContext: {gatherMode: Gatherer.GatherMode};
       /** Information about event listeners registered on the global object. */
       GlobalListeners: Array<Artifacts.GlobalListener>;
       /** Whether the page ended up on an HTTPS page after attempting to load the HTTP version. */
