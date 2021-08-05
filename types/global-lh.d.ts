@@ -8,6 +8,8 @@ import Audit_ from './audit';
 import Budget_ from './budget';
 import Gatherer_ from './gatherer';
 import * as I18n from './i18n';
+import LHError = require('../lighthouse-core/lib/lh-error.js');
+import LHResult from './lhr';
 import Protocol_ from './protocol';
 import ReportResult_ from './html-renderer';
 import StructuredData_ from './structured-data';
@@ -19,6 +21,8 @@ declare global {
     export import Audit = Audit_;
     export import Budget = Budget_;
     export import Gatherer = Gatherer_;
+    export import LighthouseError = LHError;
+    export import Result = LHResult;
 
     // i18n.d.ts.
     export import IcuMessage = I18n.IcuMessage;
