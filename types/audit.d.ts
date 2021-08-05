@@ -4,10 +4,13 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
-import ArbitraryEqualityMap = require('../lighthouse-core/lib/arbitrary-equality-map.js');
+import AuditDetails from './audit-details';
 
 declare global {
   module LH.Audit {
+    // Export in global scope.
+    export import Details = AuditDetails;
+
     export type Context = Immutable<{
       /** audit options */
       options: Record<string, any>;
@@ -61,7 +64,7 @@ declare global {
       supportedModes?: Gatherer.GatherMode[],
     }
 
-    export interface ByteEfficiencyItem extends Audit.Details.OpportunityItem {
+    export interface ByteEfficiencyItem extends AuditDetails.OpportunityItem {
       url: string;
       wastedBytes: number;
       totalBytes: number;
@@ -84,7 +87,7 @@ declare global {
       /** Overrides scoreDisplayMode with notApplicable if set to true */
       notApplicable?: boolean;
       /** Extra information about the page provided by some types of audits, in one of several possible forms that can be rendered in the HTML report. */
-      details?: Audit.Details;
+      details?: AuditDetails;
       /** If an audit encounters unusual execution circumstances, strings can be put in this optional array to add top-level warnings to the LHR. */
       runWarnings?: Array<IcuMessage>;
     }
@@ -136,24 +139,11 @@ declare global {
       /** The unit of `numericValue`, used when the consumer wishes to convert numericValue to a display string. */
       numericUnit?: string;
       /** Extra information about the page provided by some types of audits, in one of several possible forms that can be rendered in the HTML report. */
-      details?: FormattedIcu<LH.Audit.Details>;
+      details?: FormattedIcu<AuditDetails>;
     }
 
     export interface Results {
       [metric: string]: Result;
-    }
-
-    export type SimpleCriticalRequestNode = {
-      [id: string]: {
-        request: {
-          url: string;
-          startTime: number;
-          endTime: number;
-          responseReceivedTime: number;
-          transferSize: number;
-        };
-        children?: SimpleCriticalRequestNode;
-      }
     }
 
     type MultiCheckAuditP1 = Partial<Record<Artifacts.ManifestValueCheckID, boolean>>;
