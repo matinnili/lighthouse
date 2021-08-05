@@ -8,6 +8,7 @@ import Audit_ from './audit';
 import Budget_ from './budget';
 import * as I18n from './i18n';
 import Protocol_ from './protocol';
+import ReportResult_ from './html-renderer';
 import StructuredData_ from './structured-data';
 import Treemap_ from './treemap';
 
@@ -25,6 +26,7 @@ declare global {
     export import I18NRendererStrings = I18n.I18NRendererStrings;
 
     export import Protocol = Protocol_;
+    export import ReportResult = ReportResult_;
     export import StructuredData = StructuredData_;
     export import Treemap = Treemap_;
   }
