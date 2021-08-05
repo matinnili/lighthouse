@@ -5,6 +5,7 @@
  */
 
 import {IcuMessage} from './i18n';
+import Treemap from './treemap';
 
 type Details =
   Details.CriticalRequestChain |
@@ -113,7 +114,7 @@ declare module Details {
 
   interface TreemapData {
     type: 'treemap-data';
-    nodes: LH.Treemap.Node[];
+    nodes: Treemap.Node[];
   }
 
   /** String enum of possible types of values found within table items. */
