@@ -5,15 +5,17 @@
  */
 'use strict';
 
-/* global ReportUIFeatures, ReportGenerator */
+/* global ReportGenerator */
 
 /** @typedef {import('../../../report/renderer/dom').DOM} DOM */
+
+import {ReportUIFeatures} from '../../../report/renderer/report-ui-features.js';
 
 /**
  * Extends ReportUIFeatures to add an (optional) ability to save to a gist and
  * generates the saved report from a browserified ReportGenerator.
  */
-class ViewerUIFeatures extends ReportUIFeatures {
+export class ViewerUIFeatures extends ReportUIFeatures {
   /**
    * @param {DOM} dom
    * @param {?function(LH.Result): void} saveGistCallback
@@ -64,9 +66,4 @@ class ViewerUIFeatures extends ReportUIFeatures {
       this._dom.find('.lh-tools__dropdown a[data-action="save-gist"]', this._document);
     saveGistItem.setAttribute('disabled', 'true');
   }
-}
-
-// node export for testing.
-if (typeof module !== 'undefined' && module.exports) {
-  module.exports = ViewerUIFeatures;
 }

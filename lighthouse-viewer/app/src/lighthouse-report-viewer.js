@@ -5,7 +5,15 @@
  */
 'use strict';
 
-/* global DOM, ViewerUIFeatures, ReportRenderer, DragAndDrop, GithubApi, PSIApi, logger, idbKeyval, TextEncoding */
+import {DOM} from '../../../report/renderer/dom.js';
+import {ReportRenderer} from '../../../report/renderer/report-renderer.js';
+import {TextEncoding} from '../../../report/renderer/text-encoding.js';
+import {DragAndDrop} from './drag-and-drop.js';
+import {GithubApi} from './github-api.js';
+import {PSIApi} from './psi-api';
+import {ViewerUIFeatures} from './viewer-ui-features.js';
+
+/* global logger, idbKeyval */
 
 /** @typedef {import('./psi-api').PSIParams} PSIParams */
 
@@ -27,7 +35,7 @@ function find(query, context) {
 /**
  * Class that manages viewing Lighthouse reports.
  */
-class LighthouseReportViewer {
+export class LighthouseReportViewer {
   constructor() {
     this._onPaste = this._onPaste.bind(this);
     this._onSaveJson = this._onSaveJson.bind(this);
@@ -445,9 +453,4 @@ class LighthouseReportViewer {
     const placeholder = document.querySelector('.viewer-placeholder-inner');
     if (placeholder) placeholder.classList.toggle('lh-loading', force);
   }
-}
-
-// node export for testing.
-if (typeof module !== 'undefined' && module.exports) {
-  module.exports = LighthouseReportViewer;
 }

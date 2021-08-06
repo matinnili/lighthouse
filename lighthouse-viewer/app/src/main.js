@@ -5,7 +5,8 @@
  */
 'use strict';
 
-/* global LighthouseReportViewer, Logger */
+import {Logger} from '../../../report/renderer/logger.js';
+import {LighthouseReportViewer} from './lighthouse-report-viewer.js';
 
 // eslint-disable-next-line no-unused-vars
 function main() {
@@ -48,3 +49,5 @@ function main() {
 
   window.viewer = new LighthouseReportViewer();
 }
+
+window.addEventListener('DOMContentLoaded', main);

@@ -11,7 +11,7 @@ import {ReportUIFeatures as _ReportUIFeatures} from '../../report/renderer/repor
 import {Logger as _Logger} from '../../report/renderer/logger.js';
 import {TextEncoding as _TextEncoding} from '../../report/renderer/text-encoding.js';
 import {getFilenamePrefix as _getFilenamePrefix} from '../../report/renderer/file-namer.js';
-import _LighthouseReportViewer = require('../app/src/lighthouse-report-viewer.js');
+import {LighthouseReportViewer as _LighthouseReportViewer} from '../app/src/lighthouse-report-viewer.js';
 import _DragAndDrop = require('../app/src/drag-and-drop.js');
 import _GithubApi = require('../app/src/github-api.js');
 import _PSIApi = require('../app/src/psi-api.js');
@@ -24,20 +24,7 @@ import '@firebase/auth-types';
 
 declare global {
   var ReportGenerator: typeof _ReportGenerator;
-  var DOM: typeof _DOM;
-  var ReportRenderer: typeof _ReportRenderer;
-  var ReportUIFeatures: typeof _ReportUIFeatures;
-  var Logger: typeof _Logger;
-  var TextEncoding: typeof _TextEncoding;
   var logger: _Logger;
-  var getFilenamePrefix: typeof _getFilenamePrefix;
-  var LighthouseReportViewer: typeof _LighthouseReportViewer;
-  var DragAndDrop: typeof _DragAndDrop;
-  var GithubApi: typeof _GithubApi;
-  var PSIApi: typeof _PSIApi;
-  var FirebaseAuth: typeof _FirebaseAuth;
-  var ViewerUIFeatures: typeof _ViewerUIFeatures;
-
   var idbKeyval: typeof import('idb-keyval');
   var firebase: Required<FirebaseNamespace>;
 

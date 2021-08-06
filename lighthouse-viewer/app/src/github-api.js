@@ -5,14 +5,17 @@
  */
 'use strict';
 
-/* global logger, FirebaseAuth, idbKeyval, getFilenamePrefix */
+/* global logger, idbKeyval */
 
 /** @typedef {{etag: ?string, content: LH.Result}} CachableGist */
+
+import {FirebaseAuth} from './firebase-auth.js';
+import {getFilenamePrefix} from '../../../report/renderer/file-namer.js';
 
 /**
  * Wrapper around the GitHub API for reading/writing gists.
  */
-class GithubApi {
+export class GithubApi {
   constructor() {
     this._auth = new FirebaseAuth();
     this._saving = false;
@@ -152,9 +155,4 @@ class GithubApi {
       });
     });
   }
-}
-
-// node export for testing.
-if (typeof module !== 'undefined' && module.exports) {
-  module.exports = GithubApi;
 }

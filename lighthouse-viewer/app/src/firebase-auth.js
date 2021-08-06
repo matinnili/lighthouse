@@ -10,7 +10,7 @@
 /**
  * Wrapper for Firebase authentication.
  */
-class FirebaseAuth {
+export class FirebaseAuth {
   constructor() {
     /** @type {?string} */
     this._accessToken = null;
@@ -89,9 +89,4 @@ class FirebaseAuth {
       return idbKeyval.delete('accessToken');
     });
   }
-}
-
-// node export for testing.
-if (typeof module !== 'undefined' && module.exports) {
-  module.exports = FirebaseAuth;
 }
