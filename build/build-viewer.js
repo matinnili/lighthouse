@@ -44,7 +44,6 @@ async function run() {
     ],
     javascripts: [
       await generatorJsPromise,
-      fs.readFileSync(require.resolve('idb-keyval/dist/idb-keyval-min.js'), 'utf8'),
       fs.readFileSync(require.resolve('pako/dist/pako_inflate.js'), 'utf-8'),
       {path: 'src/main.js', rollup: true},
     ],

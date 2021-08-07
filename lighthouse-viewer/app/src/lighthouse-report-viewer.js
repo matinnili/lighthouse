@@ -5,15 +5,16 @@
  */
 'use strict';
 
-import {DOM} from '../../../report/renderer/dom.js';
-import {ReportRenderer} from '../../../report/renderer/report-renderer.js';
-import {TextEncoding} from '../../../report/renderer/text-encoding.js';
+import idbKeyval from 'idb-keyval';
 import {DragAndDrop} from './drag-and-drop.js';
 import {GithubApi} from './github-api.js';
 import {PSIApi} from './psi-api';
 import {ViewerUIFeatures} from './viewer-ui-features.js';
+import {DOM} from '../../../report/renderer/dom.js';
+import {ReportRenderer} from '../../../report/renderer/report-renderer.js';
+import {TextEncoding} from '../../../report/renderer/text-encoding.js';
 
-/* global logger, idbKeyval */
+/* global logger */
 
 /** @typedef {import('./psi-api').PSIParams} PSIParams */
 

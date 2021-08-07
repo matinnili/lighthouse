@@ -5,7 +5,9 @@
  */
 'use strict';
 
-/* global firebase, idbKeyval */
+/* global firebase */
+
+import idbKeyval from 'idb-keyval';
 
 /**
  * Wrapper for Firebase authentication.
